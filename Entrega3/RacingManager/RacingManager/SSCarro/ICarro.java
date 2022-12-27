@@ -8,19 +8,19 @@ public interface ICarro {
 	 * 
 	 * @param val
 	 */
-	void alteraDownforce(float val);
+	void alteraDownforce(String idCarro, float val);
 
 	/**
 	 * 
 	 * @param p
 	 */
-	void escolhePneus(String p);
+	void escolhePneus(String idCarro, String p);
 
 	/**
 	 * 
 	 * @param m
 	 */
-	void escolheMotor(String m);
+	void escolheMotor(String idCarro, String m);
 
 	/**
 	 * 

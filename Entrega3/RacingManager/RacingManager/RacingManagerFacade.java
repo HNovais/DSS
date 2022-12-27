@@ -1,17 +1,24 @@
 package RacingManager;
 
 import RacingManager.SSCorrida.*;
+import RacingManager.SSCampeonato.*;
+import RacingManager.SSCarro.*;
 import data.CircuitoDAO;
 import data.PilotoDAO;
 import data.UtilizadorDAO;
 
 import java.util.List;
+import java.util.Map;
 
 public class RacingManagerFacade implements IRacingManager {
 
-	CircuitoDAO circuitos;
-	UtilizadorDAO utilizadores;
-	PilotoDAO pilotos;
+//	CircuitoDAO circuitos;
+//	UtilizadorDAO utilizadores;
+//	PilotoDAO pilotos;
+
+	private Map<String, Circuito> circuitos;
+	private Map<String, Utilizador> utilizadores;
+	private Map<String, Piloto> pilotos;
 
 	/**
 	 * 
@@ -20,7 +27,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param p
 	 */
 	public void escolhePneus(String idJ, String idCamp, String p) {
-		// TODO - implement RacingManagerFacade.escolhePneus
+		escolhePneus(idJ, idCamp, p);
 		throw new UnsupportedOperationException();
 	}
 

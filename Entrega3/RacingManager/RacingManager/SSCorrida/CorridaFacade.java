@@ -4,10 +4,11 @@ import RacingManager.SSCarro.*;
 import data.CorridaDAO;
 
 import java.util.List;
+import java.util.Map;
 
 public class CorridaFacade implements ICorrida {
 
-	CorridaDAO corridas;
+	private Map<String, Corrida> corridas;
 
 	public int indicaMeteorologia() {
 		// TODO - implement CorridaFacade.indicaMeteorologia
@@ -25,12 +26,10 @@ public class CorridaFacade implements ICorrida {
 
 	@Override
 	public void updateDNF(List<Carro> u) {
-
 	}
 
 	@Override
 	public void updatePosicao(List<Carro> u) {
-
 	}
 
 /*	public void updateUltrapassar(Posicao p) {

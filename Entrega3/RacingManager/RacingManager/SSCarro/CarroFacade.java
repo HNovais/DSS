@@ -2,10 +2,19 @@ package RacingManager.SSCarro;
 
 import data.CarroDAO;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CarroFacade implements ICarro {
 
-	CarroDAO carros;
+	// CarroDAO carros;
+	private Map<String, Carro> carros;
 
+	public CarroFacade() {
+		this.carros = CarroDAO.getInstance();
+	}
+
+	// Não faz nada
 	public void afinaCarro() {
 		// TODO - implement CarroFacade.afinaCarro
 		throw new UnsupportedOperationException();
@@ -15,28 +24,52 @@ public class CarroFacade implements ICarro {
 	 * 
 	 * @param val
 	 */
-	public void alteraDownforce(float val) {
-		// TODO - implement CarroFacade.alteraDownforce
-		throw new UnsupportedOperationException();
+	public void alteraDownforce(String idCarro, float val) {
+		if (val < 0 || val > 1) {
+			throw new IllegalArgumentException("Invalid downforce value: " + val);
+		}
+		Carro carro = carros.get(idCarro);
+		if (carro == null) {
+			throw new IllegalArgumentException("Invalid car id: " + idCarro);
+		}
+		carro.setDownforce(val);
 	}
+
 
 	/**
 	 * 
 	 * @param p
 	 */
-	public void escolhePneus(String p) {
-		// TODO - implement CarroFacade.escolhePneus
-		throw new UnsupportedOperationException();
+
+	// Tipos de Pneus disponiveis: Duro / Macio / Chuva
+	public void escolhePneus(String idCarro, String p) {
+		Carro carro = carros.get(idCarro);
+		if (carro == null) {
+			throw new IllegalArgumentException("Invalid car id: " + idCarro);
+		}
+		if (!p.equals("Macio") && !p.equals("Chuva") && !p.equals("Duro")) {
+			throw new IllegalArgumentException("Invalid tire type: " + p);
+		}
+		carro.setPneus(p);
 	}
+
 
 	/**
 	 * 
 	 * @param m
 	 */
-	public void escolheMotor(String m) {
-		// TODO - implement CarroFacade.escolheMotor
-		throw new UnsupportedOperationException();
+	// Tipos de disponiveis: Conservador, Normal ou Agressivo
+	public void escolheMotor(String idCarro, String m) {
+		Carro carro = carros.get(idCarro);
+		if (carro == null) {
+			throw new IllegalArgumentException("Invalid car id: " + idCarro);
+		}
+		if (!m.equals("Conservador") && !m.equals("Normal") && !m.equals("Agressivo")) {
+			throw new IllegalArgumentException("Invalid engine type: " + m);
+		}
+		carro.setMotor(m);
 	}
+
 
 	/**
 	 * 

@@ -22,7 +22,6 @@ public class Jogador {
 	 * @param m
 	 */
 	public void escolheMotor(String m) {
-		// TODO - implement Jogador.escolheMotor
 		throw new UnsupportedOperationException();
 	}
 
