@@ -3,9 +3,9 @@
 Trabalho prático da UC de Desenvolvimento de Sistemas de Software
 
 <b> Grupo 19 </b>
-* Afonso Bessa - aXXXXX <br>
+* Afonso Bessa - a95225 <br>
 * Hugo Novais - a96267 <br>
-* Martim Ribeiro - aXXXXX <br>
+* Martim Ribeiro - a96113 <br>
 * Telmo Oliveira - aXXXXX <br>
 
 <b> LEI - Universidade do Minho - 22/23 </b>
