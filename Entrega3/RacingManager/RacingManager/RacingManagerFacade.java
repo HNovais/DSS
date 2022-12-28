@@ -12,13 +12,11 @@ import java.util.Map;
 
 public class RacingManagerFacade implements IRacingManager {
 
-//	CircuitoDAO circuitos;
-//	UtilizadorDAO utilizadores;
-//	PilotoDAO pilotos;
-
-	private Map<String, Circuito> circuitos;
-	private Map<String, Utilizador> utilizadores;
-	private Map<String, Piloto> pilotos;
+	CircuitoDAO circuitos;
+	UtilizadorDAO utilizadores;
+	PilotoDAO pilotos;
+	CampeonatoFacade campF = new CampeonatoFacade();
+	CarroFacade carroF = new CarroFacade();
 
 	/**
 	 * 
@@ -27,8 +25,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param p
 	 */
 	public void escolhePneus(String idJ, String idCamp, String p) {
-		escolhePneus(idJ, idCamp, p);
-		throw new UnsupportedOperationException();
+		campF.escolhePneus(idJ, idCamp, p);
 	}
 
 	/**
@@ -48,8 +45,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param val
 	 */
 	public void alteraDownforce(String idCamp, String idJ, float val) {
-		// TODO - implement RacingManagerFacade.alteraDownforce
-		throw new UnsupportedOperationException();
+		campF.alteraDownforce(idCamp, idJ, val);
 	}
 
 	/**
@@ -59,8 +55,8 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param idCamp
 	 */
 	public void escolheCarro(String idJ, String idCarro, String idCamp) {
-		// TODO - implement RacingManagerFacade.escolheCarro
-		throw new UnsupportedOperationException();
+		Carro ca = carroF.getCarro(idCarro);
+		campF.escolheCarro(idJ, idCamp, ca);
 	}
 
 	/**
@@ -70,8 +66,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param m
 	 */
 	public void escolheMotor(String idJ, String idCamp, String m) {
-		// TODO - implement RacingManagerFacade.escolheMotor
-		throw new UnsupportedOperationException();
+		campF.escolheMotor(idJ, idCamp, m);
 	}
 
 	/**
@@ -81,8 +76,8 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param idCamp
 	 */
 	public void escolhePiloto(String idJ, String idP, String idCamp) {
-		// TODO - implement RacingManagerFacade.escolhePiloto
-		throw new UnsupportedOperationException();
+		Piloto p = pilotos.get(idP);
+		campF.escolhePiloto(idJ, p, idCamp);
 	}
 
 	/**
@@ -91,8 +86,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param idJ
 	 */
 	public String indicaAfinacoes(String idCamp, String idJ) {
-		// TODO - implement RacingManagerFacade.indicaAfinacoes
-		throw new UnsupportedOperationException();
+		return campF.indicaAfinacoes(idCamp, idJ);
 	}
 
 	/**
@@ -100,8 +94,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param idCamp
 	 */
 	public Corrida indicaCorrida(String idCamp) {
-		// TODO - implement RacingManagerFacade.indicaCorrida
-		throw new UnsupportedOperationException();
+		return campF.indicaCorrida(idCamp);
 	}
 
 	/**
@@ -109,8 +102,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param idCamp
 	 */
 	public int indicaMeteorologia(String idCamp) {
-		// TODO - implement RacingManagerFacade.indicaMeteorologia
-		throw new UnsupportedOperationException();
+		return this.campF.indicaMeteorologia(idCamp);
 	}
 
 	/**
@@ -118,8 +110,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param list
 	 */
 	public void nomeJogadores(List<String> list) {
-		// TODO - implement RacingManagerFacade.nomeJogadores
-		throw new UnsupportedOperationException();
+		campF.nomeJogadores(list);
 	}
 
 	/**
@@ -127,8 +118,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param idCamp
 	 */
 	public void novoCampeonato(String idCamp) {
-		// TODO - implement RacingManagerFacade.novoCampeonato
-		throw new UnsupportedOperationException();
+		campF.novoCampeonato(idCamp);
 	}
 
 	/**
@@ -136,17 +126,15 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param n
 	 */
 	public void numeroJogadores(int n) {
-		// TODO - implement RacingManagerFacade.numeroJogadores
-		throw new UnsupportedOperationException();
+		campF.numeroJogadores(n);
 	}
 
 	/**
 	 * 
 	 * @param idCamp
 	 */
-	public String simularCorrida(int idCamp) {
-		// TODO - implement RacingManagerFacade.simularCorrida
-		throw new UnsupportedOperationException();
+	public String simularCorrida(String idCamp) {
+		return campF.simulaCorrida(idCamp);
 	}
 
 	/**
@@ -155,8 +143,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param idJ
 	 */
 	public boolean verificaAfinacoes(String idCamp, String idJ) {
-		// TODO - implement RacingManagerFacade.verificaAfinacoes
-		throw new UnsupportedOperationException();
+		return campF.verificaAfinacoes(idCamp, idJ);
 	}
 
 }

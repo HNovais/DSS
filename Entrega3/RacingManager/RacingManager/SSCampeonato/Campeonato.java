@@ -3,20 +3,22 @@ package RacingManager.SSCampeonato;
 import RacingManager.SSCarro.Carro;
 import RacingManager.SSCorrida.*;
 import RacingManager.*;
+import data.CorridaDAO;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Campeonato {
 
 	private String nome;
 	private int participantes;
+	private int contador = 0;
 	private List<Corrida> corridas;
-	private Set<Jogador> jogadores;
+	private Set<Jogador> jogadores = new HashSet<>();
 	private Map<String, List<Integer>> classificacao;
 	private Map<String, List<Integer>> pontuacao;
 	private Map<String, List<String>> pontCategoria;
+	private CorridaFacade corrF;
+	CorridaDAO corrDAO;
 
 	/**
 	 * 
@@ -24,8 +26,12 @@ public class Campeonato {
 	 * @param ca
 	 */
 	public void escolheCarro(String idJ, Carro ca) {
-		// TODO - implement Campeonato.escolheCarro
-		throw new UnsupportedOperationException();
+
+		Jogador j = jogadores.stream()
+					.filter(jog -> jog.getId() == idJ)
+					.findFirst()
+					.orElse(null);
+		j.escolheCarro(ca);
 	}
 
 	/**
@@ -34,8 +40,11 @@ public class Campeonato {
 	 * @param m
 	 */
 	public void escolheMotor(String idJ, String m) {
-		// TODO - implement Campeonato.escolheMotor
-		throw new UnsupportedOperationException();
+		Jogador j = jogadores.stream()
+					.filter(jog -> jog.getId() == idJ)
+					.findFirst()
+					.orElse(null);
+		j.escolheMotor(m);
 	}
 
 	/**
@@ -44,8 +53,11 @@ public class Campeonato {
 	 * @param p
 	 */
 	public void escolhePneus(String idJ, String p) {
-		// TODO - implement Campeonato.escolhePneus
-		throw new UnsupportedOperationException();
+		Jogador j = jogadores.stream()
+					.filter(jog -> jog.getId() == idJ)
+					.findFirst()
+					.orElse(null);
+		j.escolhePneus(p);
 	}
 
 	/**
@@ -53,18 +65,24 @@ public class Campeonato {
 	 * @param idJ
 	 */
 	public String indicaAfinacoes(String idJ) {
-		// TODO - implement Campeonato.indicaAfinacoes
-		throw new UnsupportedOperationException();
+
+		int a = totalAfinacoes();
+		Jogador j = jogadores.stream()
+					.filter(jog -> jog.getId() == idJ)
+					.findFirst()
+					.orElse(null);
+
+		return j.indicaAfinacoes(a);
 	}
 
 	public Corrida indicaCorrida() {
-		// TODO - implement Campeonato.indicaCorrida
-		throw new UnsupportedOperationException();
+		int cont = getContador();
+		return corrDAO.get(corridas.get(cont));
 	}
 
 	public int indicaMeteorologia() {
-		// TODO - implement Campeonato.indicaMeteorologia
-		throw new UnsupportedOperationException();
+		Corrida corr = this.indicaCorrida();
+		return 0;
 	}
 
 	/**
@@ -72,8 +90,10 @@ public class Campeonato {
 	 * @param listaJogadores
 	 */
 	public void novoCampeonato(List<String> listaJogadores) {
-		// TODO - implement Campeonato.novoCampeonato
-		throw new UnsupportedOperationException();
+		for(String jog : listaJogadores){
+			Jogador jogador = new Jogador(jog);
+			jogadores.add(jogador);
+		}
 	}
 
 	/**
@@ -81,13 +101,16 @@ public class Campeonato {
 	 * @param idJ
 	 */
 	public boolean verificaAfinacoes(String idJ) {
-		// TODO - implement Campeonato.verificaAfinacoes
-		throw new UnsupportedOperationException();
+		int a = totalAfinacoes();
+		Jogador j = jogadores.stream()
+					.filter(jog -> jog.getId() == idJ)
+					.findFirst()
+					.orElse(null);
+		return j.verificaAfinacoes(a);
 	}
 
 	public int totalAfinacoes() {
-		// TODO - implement Campeonato.totalAfinacoes
-		throw new UnsupportedOperationException();
+		return (int) (corridas.size() * 0.666666);
 	}
 
 	/**
@@ -96,8 +119,30 @@ public class Campeonato {
 	 * @param p
 	 */
 	public void escolhePiloto(String idJ, Piloto p) {
-		// TODO - implement Campeonato.escolhePiloto
-		throw new UnsupportedOperationException();
+		Jogador j = jogadores.stream()
+					.filter(jog -> jog.getId() == idJ)
+					.findFirst()
+					.orElse(null);
+
+		j.escolhePiloto(p);
 	}
 
+	public void alteraDownforce(String idJ, float val){
+		Jogador j = jogadores.stream()
+					.filter(jog -> jog.getId() == idJ)
+					.findFirst()
+					.orElse(null);
+		j.alteraDownforce(val);
+	}
+
+	public String simulaCorrida(){
+		Corrida corr = indicaCorrida();
+		// modo do jogo --> Normal ou Premium
+		String updates = corr.simulaCorrida();
+		//Faz Updates
+		return updates;
+	}
+	public int getContador() {
+		return contador;
+	}
 }

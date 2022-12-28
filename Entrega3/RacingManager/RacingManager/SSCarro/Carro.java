@@ -10,7 +10,7 @@ public class Carro {
 	private int voltas;
 	private List<Elemento> elementos;
 	private List<Carro> posicao;
-	private Map<String, List<Long>> tempo;
+	private List<Long> tempo;
 	private int fiabilidade;
 	private int potencia;
 	private int cilindrada;
@@ -23,6 +23,39 @@ public class Carro {
 	private Boolean DNF;
 	private String marca;
 	private String modelo;
+	private String id;
+
+	public boolean tentaUltrapassar(String GDU, Carro frente){
+		// Alguém que faça esta merda
+
+		return false;
+	}
+
+	public boolean calculaDNF() {
+		//Outra
+
+		return false;
+	}
+
+	public boolean calculaOverall() {
+		//Mais Uma malta
+
+		return false;
+	}
+
+	public void calculaTempo() {
+		// Boa Sorte
+		// Depois de calcular meter na lista de tempo :)
+	}
+
+	public long somaTempo(){
+		long sum = 0;
+		for (Long l : tempo){
+			sum += l;
+		}
+
+		return sum;
+	}
 
 	public int getVoltas() {
 		return voltas;
@@ -48,11 +81,11 @@ public class Carro {
 		this.posicao = posicao;
 	}
 
-	public Map<String, List<Long>> getTempo() {
+	public List<Long> getTempo() {
 		return tempo;
 	}
 
-	public void setTempo(Map<String, List<Long>> tempo) {
+	public void setTempo(List<Long> tempo) {
 		this.tempo = tempo;
 	}
 
@@ -150,6 +183,14 @@ public class Carro {
 
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Override

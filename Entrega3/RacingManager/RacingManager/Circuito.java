@@ -8,4 +8,7 @@ public class Circuito {
 	private int distancia;
 	private List<Elemento> elementos;
 
+	public List<Elemento> getElementos() {
+		return elementos;
+	}
 }

@@ -10,10 +10,23 @@ public class CorridaFacade implements ICorrida {
 
 	private Map<String, Corrida> corridas;
 
+	public String generateMeteorologia() {
+		// Generate a random number between 0 and 1
+		double randomDouble = Math.random();
+
+		// If the random number is less than 0.5, return 0. Otherwise, return 1.
+		if (randomDouble < 0.5) {
+			return "Chuva"; // Quando é 0
+		} else {
+			return "Tempo seco"; // Quando é 1
+		}
+	}
+
 	public int indicaMeteorologia() {
-		// TODO - implement CorridaFacade.indicaMeteorologia
+		//String m = setMeteorologia(generateMeteorologia());
 		throw new UnsupportedOperationException();
 	}
+
 
 	/**
 	 * 

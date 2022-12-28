@@ -2,25 +2,25 @@ package RacingManager.SSCarro;
 
 public interface ICarro {
 
-	void afinaCarro();
+	//void afinaCarro();
 
 	/**
 	 * 
 	 * @param val
 	 */
-	void alteraDownforce(String idCarro, float val);
+	//void alteraDownforce(String idCarro, float val);
 
 	/**
 	 * 
 	 * @param p
 	 */
-	void escolhePneus(String idCarro, String p);
+	//void escolhePneus(String idCarro, String p);
 
 	/**
 	 * 
 	 * @param m
 	 */
-	void escolheMotor(String idCarro, String m);
+	//void escolheMotor(String idCarro, String m);
 
 	/**
 	 * 

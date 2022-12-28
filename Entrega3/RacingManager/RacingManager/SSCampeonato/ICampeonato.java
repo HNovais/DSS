@@ -48,7 +48,7 @@ public interface ICampeonato {
 	 * @param idCamp
 	 * @param idJ
 	 */
-	int indicaAfinacoes(String idCamp, String idJ);
+	String indicaAfinacoes(String idCamp, String idJ);
 
 	/**
 	 * 
@@ -59,9 +59,9 @@ public interface ICampeonato {
 
 	/**
 	 * 
-	 * @param newCamp
+	 * @param idCamp
 	 */
-	void novoCampeonato(Campeonato newCamp);
+	void novoCampeonato(String idCamp);
 
 	/**
 	 * 

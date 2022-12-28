@@ -6,6 +6,7 @@ public class Jogador {
 
 	private String id;
 	private Carro carro;
+	private Piloto piloto;
 	private int afinacoes;
 
 	/**
@@ -13,8 +14,15 @@ public class Jogador {
 	 * @param ca
 	 */
 	public void escolheCarro(Carro ca) {
-		// TODO - implement Jogador.escolheCarro
-		throw new UnsupportedOperationException();
+		this.carro = ca;
+	}
+
+	/**
+	 *
+	 * @param p
+	 */
+	public void escolhePiloto(Piloto p){
+		setPiloto(p);
 	}
 
 	/**
@@ -22,34 +30,34 @@ public class Jogador {
 	 * @param m
 	 */
 	public void escolheMotor(String m) {
-		throw new UnsupportedOperationException();
+		carro.setMotor(m);
 	}
 
 	/**
 	 * 
 	 * @param p
 	 */
-	public void escolhePneu(String p) {
-		// TODO - implement Jogador.escolhePneu
-		throw new UnsupportedOperationException();
+	public void escolhePneus(String p) {
+		carro.setPneus(p);
 	}
 
 	/**
 	 * 
 	 * @param a
 	 */
-	public void indicaAfinacoes(String a) {
-		// TODO - implement Jogador.indicaAfinacoes
-		throw new UnsupportedOperationException();
+	public String indicaAfinacoes(int a) {
+		int total = a - afinacoes;
+		return String.valueOf(total);
 	}
 
 	/**
 	 * 
 	 * @param a
 	 */
-	public void verificaAfinacoes(Boolean a) {
-		// TODO - implement Jogador.verificaAfinacoes
-		throw new UnsupportedOperationException();
+	public boolean verificaAfinacoes(int a){
+		if(afinacoes - a > 0)
+			return true;
+		return false;
 	}
 
 	public void afinaCarro() {
@@ -61,9 +69,27 @@ public class Jogador {
 	 * 
 	 * @param val
 	 */
-	public void alteraDownforce(float val) {
-		// TODO - implement Jogador.alteraDownforce
-		throw new UnsupportedOperationException();
+	public void alteraDownforce(float val){
+		carro.setDownforce(val);
 	}
 
+	public Jogador(String id) {
+		this.id = id;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Piloto getPiloto() {
+		return piloto;
+	}
+
+	public void setPiloto(Piloto piloto) {
+		this.piloto = piloto;
+	}
 }

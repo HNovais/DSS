@@ -4,6 +4,7 @@ import RacingManager.Piloto;
 import RacingManager.SSCarro.Carro;
 import RacingManager.SSCorrida.Corrida;
 import data.CampeonatoDAO;
+import data.CorridaDAO;
 
 import java.util.List;
 
@@ -18,8 +19,7 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param n
 	 */
 	public void numeroJogadores(int n) {
-		// TODO - implement CampeonatoFacade.numeroJogadores
-		throw new UnsupportedOperationException();
+		this.numeroJogadores = n;
 	}
 
 	/**
@@ -27,8 +27,7 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param l
 	 */
 	public void nomeJogadores(List<String> l) {
-		// TODO - implement CampeonatoFacade.nomeJogadores
-		throw new UnsupportedOperationException();
+		this.nomeJogadores = l;
 	}
 
 	/**
@@ -38,8 +37,8 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param idCamp
 	 */
 	public void escolhePiloto(String idJ, Piloto p, String idCamp) {
-		// TODO - implement CampeonatoFacade.escolhePiloto
-		throw new UnsupportedOperationException();
+		Campeonato c = campeonatos.get(idCamp);
+		c.escolhePiloto(idJ, p);
 	}
 
 	/**
@@ -49,8 +48,8 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param ca
 	 */
 	public void escolheCarro(String idJ, String idCamp, Carro ca) {
-		// TODO - implement CampeonatoFacade.escolheCarro
-		throw new UnsupportedOperationException();
+		Campeonato c = campeonatos.get(idCamp);
+		c.escolheCarro(idJ, ca);
 	}
 
 	/**
@@ -59,8 +58,8 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @return
 	 */
 	public Corrida indicaCorrida(String idCamp) {
-		// TODO - implement CampeonatoFacade.indicaCorrida
-		throw new UnsupportedOperationException();
+		Campeonato c = campeonatos.get(idCamp);
+		return c.indicaCorrida();
 	}
 
 	/**
@@ -68,9 +67,9 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param idCamp
 	 * @param idJ
 	 */
-	public int indicaAfinacoes(String idCamp, String idJ) {
-		// TODO - implement CampeonatoFacade.indicaAfinacoes
-		throw new UnsupportedOperationException();
+	public String indicaAfinacoes(String idCamp, String idJ) {
+		Campeonato c = this.campeonatos.get(idCamp);
+		return c.indicaAfinacoes(idJ);
 	}
 
 	/**
@@ -79,17 +78,19 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param idJ
 	 */
 	public Boolean verificaAfinacoes(String idCamp, String idJ) {
-		// TODO - implement CampeonatoFacade.verificaAfinacoes
-		throw new UnsupportedOperationException();
+		Campeonato c = campeonatos.get(idCamp);
+		return c.verificaAfinacoes(idJ);
 	}
+
 
 	/**
 	 * 
-	 * @param newCamp
+	 * @param idCamp
 	 */
-	public void novoCampeonato(Campeonato newCamp) {
-		// TODO - implement CampeonatoFacade.novoCampeonato
-		throw new UnsupportedOperationException();
+	public void novoCampeonato(String idCamp) {
+		Campeonato newCamp = campeonatos.get(idCamp);
+		//adicionaCampeonato(newCamp, numeroJogadores);
+		newCamp.novoCampeonato(nomeJogadores);
 	}
 
 	/**
@@ -109,8 +110,8 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param val
 	 */
 	public void alteraDownforce(String idCamp, String idJ, float val) {
-		// TODO - implement CampeonatoFacade.alteraDownforce
-		throw new UnsupportedOperationException();
+		Campeonato c = campeonatos.get(idCamp);
+		c.alteraDownforce(idJ, val);
 	}
 
 	/**
@@ -120,8 +121,8 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param m
 	 */
 	public void escolheMotor(String idJ, String idCamp, String m) {
-		// TODO - implement CampeonatoFacade.escolheMotor
-		throw new UnsupportedOperationException();
+		Campeonato c = campeonatos.get(idCamp);
+		c.escolheMotor(idJ, m);
 	}
 
 	/**
@@ -131,8 +132,8 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param p
 	 */
 	public void escolhePneus(String idJ, String idCamp, String p) {
-		// TODO - implement CampeonatoFacade.escolhePneus
-		throw new UnsupportedOperationException();
+		Campeonato c = campeonatos.get(idCamp);
+		c.escolhePneus(idJ, p);
 	}
 
 	/**
@@ -140,8 +141,8 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param idCamp
 	 */
 	public int indicaMeteorologia(String idCamp) {
-		// TODO - implement CampeonatoFacade.indicaMeteorologia
-		throw new UnsupportedOperationException();
+		Campeonato c = this.campeonatos.get(idCamp);
+		return c.indicaMeteorologia();
 	}
 
 	/**
@@ -149,12 +150,12 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param idCamp
 	 */
 	public String simulaCorrida(String idCamp) {
-		// TODO - implement CampeonatoFacade.simulaCorrida
-		throw new UnsupportedOperationException();
+		Campeonato c = campeonatos.get(idCamp);
+		return c.simulaCorrida();
 	}
 
 	/**
-	 * 
+	 *
 	 * @param newCamp
 	 * @param numeroJogadores
 	 */

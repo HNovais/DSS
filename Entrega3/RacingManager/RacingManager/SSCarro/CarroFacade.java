@@ -7,24 +7,26 @@ import java.util.Map;
 
 public class CarroFacade implements ICarro {
 
-	// CarroDAO carros;
-	private Map<String, Carro> carros;
+	CarroDAO carros;
+	//private Map<String, Carro> carros;
 
 	public CarroFacade() {
-		this.carros = CarroDAO.getInstance();
+		//this.carros = CarroDAO.getInstance();
 	}
-
+/*
 	// Não faz nada
 	public void afinaCarro() {
 		// TODO - implement CarroFacade.afinaCarro
 		throw new UnsupportedOperationException();
 	}
 
+
+
 	/**
 	 * 
 	 * @param val
 	 */
-	public void alteraDownforce(String idCarro, float val) {
+/*	public void alteraDownforce(float val) {
 		if (val < 0 || val > 1) {
 			throw new IllegalArgumentException("Invalid downforce value: " + val);
 		}
@@ -42,7 +44,7 @@ public class CarroFacade implements ICarro {
 	 */
 
 	// Tipos de Pneus disponiveis: Duro / Macio / Chuva
-	public void escolhePneus(String idCarro, String p) {
+/*	public void escolhePneus(String p) {
 		Carro carro = carros.get(idCarro);
 		if (carro == null) {
 			throw new IllegalArgumentException("Invalid car id: " + idCarro);
@@ -59,7 +61,7 @@ public class CarroFacade implements ICarro {
 	 * @param m
 	 */
 	// Tipos de disponiveis: Conservador, Normal ou Agressivo
-	public void escolheMotor(String idCarro, String m) {
+/*	public void escolheMotor(String idCarro, String m) {
 		Carro carro = carros.get(idCarro);
 		if (carro == null) {
 			throw new IllegalArgumentException("Invalid car id: " + idCarro);
@@ -68,6 +70,10 @@ public class CarroFacade implements ICarro {
 			throw new IllegalArgumentException("Invalid engine type: " + m);
 		}
 		carro.setMotor(m);
+	}
+*/
+	public Carro getCarro(String idCarro) {
+		return this.carros.get(idCarro);
 	}
 
 

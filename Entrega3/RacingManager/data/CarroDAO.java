@@ -9,4 +9,9 @@ public class CarroDAO {
     public static Map<String, Carro> getInstance() {
         return null;
     }
+
+    public Carro get(String idCarro) {
+
+        return new Carro();
+    }
 }
