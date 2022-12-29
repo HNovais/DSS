@@ -15,8 +15,9 @@ public class Campeonato {
 	private List<Corrida> corridas;
 	private Set<Jogador> jogadores = new HashSet<>();
 	private Map<String, List<Integer>> classificacao;
+
 	private Map<String, List<Integer>> pontuacao;
-	private Map<String, List<String>> pontCategoria;
+	// private Map<String, List<String>> pontCategoria;
 	private CorridaFacade corrF;
 	CorridaDAO corrDAO;
 

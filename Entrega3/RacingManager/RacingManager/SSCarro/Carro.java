@@ -8,8 +8,7 @@ import java.util.Map;
 public class Carro {
 
 	private int voltas;
-	private List<Elemento> elementos;
-	private List<Carro> posicao;
+	private List<Integer> posicao;
 	private List<Long> tempo;
 	private int fiabilidade;
 	private int potencia;
@@ -18,13 +17,15 @@ public class Carro {
 	private String pneus;
 	private String motor;
 	private float downforce;
-	private Piloto piloto;  // esqueci-me disto, não deve ser mais preciso
 	private String categoria;
 	private Boolean DNF;
 	private String marca;
 	private String modelo;
 	private String id;
-/*
+
+	// private Piloto piloto;  // esqueci-me disto, não deve ser mais preciso
+
+	/*
 	public boolean tentaUltrapassar(String GDU, Jogador frente){
 		// Alguém que faça esta merda
 
@@ -89,19 +90,11 @@ public class Carro {
 		this.voltas = voltas;
 	}
 
-	public List<Elemento> getElementos() {
-		return elementos;
-	}
-
-	public void setElementos(List<Elemento> elementos) {
-		this.elementos = elementos;
-	}
-
-	public List<Carro> getPosicao() {
+		public List<Integer> getPosicao() {
 		return posicao;
 	}
 
-	public void setPosicao(List<Carro> posicao) {
+	public void setPosicao(List<Integer> posicao) {
 		this.posicao = posicao;
 	}
 
@@ -169,13 +162,13 @@ public class Carro {
 		this.downforce = downforce;
 	}
 
-	public Piloto getPiloto() {
+/*	public Piloto getPiloto() {
 		return piloto;
 	}
 
 	public void setPiloto(Piloto piloto) {
 		this.piloto = piloto;
-	}
+	}*/
 
 	public String getCategoria() {
 		return categoria;
@@ -225,7 +218,6 @@ public class Carro {
 	public String toString() {
 		return "Carro{" +
 				"voltas=" + voltas +
-				", elementos=" + elementos +
 				", posicao=" + posicao +
 				", tempo=" + tempo +
 				", fiabilidade=" + fiabilidade +
@@ -235,7 +227,7 @@ public class Carro {
 				", pneus='" + pneus + '\'' +
 				", motor='" + motor + '\'' +
 				", downforce=" + downforce +
-				", piloto=" + piloto +
+				// ", piloto=" + piloto +
 				", categoria='" + categoria + '\'' +
 				", DNF=" + DNF +
 				", marca='" + marca + '\'' +
