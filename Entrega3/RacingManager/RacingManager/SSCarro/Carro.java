@@ -14,18 +14,18 @@ public class Carro {
 	private int fiabilidade;
 	private int potencia;
 	private int cilindrada;
-	private Float PAC;
+	private float PAC;
 	private String pneus;
 	private String motor;
-	private Float downforce;
-	private Piloto piloto;
+	private float downforce;
+	private Piloto piloto;  // esqueci-me disto, não deve ser mais preciso
 	private String categoria;
 	private Boolean DNF;
 	private String marca;
 	private String modelo;
 	private String id;
-
-	public boolean tentaUltrapassar(String GDU, Carro frente){
+/*
+	public boolean tentaUltrapassar(String GDU, Jogador frente){
 		// Alguém que faça esta merda
 
 		return false;
@@ -47,7 +47,31 @@ public class Carro {
 		// Boa Sorte
 		// Depois de calcular meter na lista de tempo :)
 	}
+*/
+	public float calculaDNF(String meteorologia){
+		float p = 0;
+		float m = 0;
 
+		if (meteorologia == "Chuva" && (pneus == "Macio" || pneus == "Duro"))
+			p = 1;
+		else if(meteorologia == "Chuva")
+			p = 0;
+		else{
+			if (pneus == "Macio")
+				p = 0.75F;
+			else
+				p = 0.25F;
+		}
+
+		if (motor == "Conservador")
+			p = 0.25F;
+		else if (motor == "Normal")
+			p = 0.5F;
+		else
+			p = 0.75F;
+
+		return (p + m + (1 - PAC) + (1 - downforce));
+	}
 	public long somaTempo(){
 		long sum = 0;
 		for (Long l : tempo){
@@ -191,6 +215,10 @@ public class Carro {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public void afinaCarro(){
+
 	}
 
 	@Override

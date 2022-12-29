@@ -24,9 +24,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param idCamp
 	 * @param p
 	 */
-	public void escolhePneus(String idJ, String idCamp, String p) {
-		campF.escolhePneus(idJ, idCamp, p);
-	}
+	public void escolhePneus(String idJ, String idCamp, String p) { campF.escolhePneus(idJ, idCamp, p); }
 
 	/**
 	 * 
@@ -34,8 +32,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param idJ
 	 */
 	public void afinaCarro(String idCamp, String idJ) {
-		// TODO - implement RacingManagerFacade.afinaCarro
-		throw new UnsupportedOperationException();
+		campF.afinaCarro(idCamp, idJ);
 	}
 
 	/**
@@ -44,9 +41,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * @param idJ
 	 * @param val
 	 */
-	public void alteraDownforce(String idCamp, String idJ, float val) {
-		campF.alteraDownforce(idCamp, idJ, val);
-	}
+	public void alteraDownforce(String idCamp, String idJ, float val) { campF.alteraDownforce(idCamp, idJ, val); }
 
 	/**
 	 * 
@@ -101,9 +96,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * 
 	 * @param idCamp
 	 */
-	public int indicaMeteorologia(String idCamp) {
-		return this.campF.indicaMeteorologia(idCamp);
-	}
+	public int indicaMeteorologia(String idCamp) { return this.campF.indicaMeteorologia(idCamp); }
 
 	/**
 	 * 

@@ -167,7 +167,7 @@ public class Menu {
     }
 
     /**
-     * Método que regista uma uma pré-condição numa opção do menu.
+     * Método que regista uma pré-condição numa opção do menu.
      *
      * @param i índice da opção (começa em 1)
      * @param b pré-condição a registar

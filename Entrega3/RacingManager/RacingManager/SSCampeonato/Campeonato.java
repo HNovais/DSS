@@ -145,4 +145,13 @@ public class Campeonato {
 	public int getContador() {
 		return contador;
 	}
+
+	public void afinaCarro(String idJ) {
+		Jogador j = jogadores.stream()
+				.filter(jog -> jog.getId() == idJ)
+				.findFirst()
+				.orElse(null);
+		j.afinaCarro();
+
+	}
 }

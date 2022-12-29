@@ -8,15 +8,15 @@ import java.util.*;
 public class Corrida {
 
 	private int voltas;
-	private List<Carro> posicao = new ArrayList<>();
+	private List<Jogador> posicao = new ArrayList<>();
 	private Map<String, List<Long>> tempo = new HashMap<>();
 	private String meteorologia;
 	private Circuito circuito;
 	private Map<String, List<Carro>> posCategoria;
 
 	public String simulaCorrida(){
-		List<Carro> ultrapassar = new ArrayList<>();
-		List<Carro> DNF = new ArrayList<>();
+		List<Jogador> ultrapassar = new ArrayList<>();
+		List<Jogador> DNF = new ArrayList<>();
 
 		for (int i = 1; i <= voltas; i++){
 			List<Elemento> elementos = circuito.getElementos();
@@ -25,28 +25,32 @@ public class Corrida {
 				String GDU = e.getGDU();
 
 				for (int j = 1; j < posicao.size(); j++){
-					Carro c = posicao.get(j);
-					boolean res = c.tentaUltrapassar(GDU, posicao.get(j-1));
+					Jogador c = posicao.get(j);
+					boolean res = c.tentaUltrapassar(GDU);
 
 					if(res){ultrapassar.add(c);}
 				}
 
-				for(Carro u : ultrapassar){
-					boolean dnf = u.calculaDNF();
+				for(Jogador u : ultrapassar){
+					boolean dnf = u.calculaDNF(i / voltas, GDU, meteorologia);
 
 					if(dnf){
-						u.setDNF(true);
+						u.carro.setDNF(true);
 						DNF.add(u);
 					}
 					else{
-						boolean ovr = u.calculaOverall();
+						boolean ovr = false;
+						int ind = posicao.indexOf(u);
+
+						if (ind != 0)
+							u.calculaOverall(posicao.get(ind - 1));
 
 						if(ovr){updatePosicao(u);}
 					}
 				}
 
-				for (Carro p : posicao){
-					p.calculaTempo();
+				for (Jogador p : posicao){
+					//p.carro.calculaTempo();
 					updateTempo(p);
 				}
 			}
@@ -57,14 +61,14 @@ public class Corrida {
 		return resumoCorrida();
 	}
 
-	private void updatePosicao(Carro u){
+	private void updatePosicao(Jogador u){
 		int ind = posicao.indexOf(u);
 		Collections.swap(posicao, ind, ind - 1);
 	}
 
-	private void updateTempo(Carro p){
+	private void updateTempo(Jogador p){
 		List<Long> list = tempo.get(p.getId());
-		list.add(p.somaTempo());
+		list.add(p.carro.somaTempo());
 	}
 
 	private void printResumo(){

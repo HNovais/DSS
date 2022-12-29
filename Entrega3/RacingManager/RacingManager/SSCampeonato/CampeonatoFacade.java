@@ -99,8 +99,8 @@ public class CampeonatoFacade implements ICampeonato {
 	 * @param idJ
 	 */
 	public void afinaCarro(String idCamp, String idJ) {
-		// TODO - implement CampeonatoFacade.afinaCarro
-		throw new UnsupportedOperationException();
+		Campeonato c = campeonatos.get(idCamp);
+		c.afinaCarro(idJ);
 	}
 
 	/**

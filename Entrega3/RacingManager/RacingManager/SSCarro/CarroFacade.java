@@ -13,19 +13,14 @@ public class CarroFacade implements ICarro {
 	public CarroFacade() {
 		//this.carros = CarroDAO.getInstance();
 	}
+
+
 /*
-	// Não faz nada
-	public void afinaCarro() {
-		// TODO - implement CarroFacade.afinaCarro
-		throw new UnsupportedOperationException();
-	}
-
-
-
 	/**
 	 * 
 	 * @param val
 	 */
+
 /*	public void alteraDownforce(float val) {
 		if (val < 0 || val > 1) {
 			throw new IllegalArgumentException("Invalid downforce value: " + val);
