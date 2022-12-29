@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class Carro {
 
+	private String idCarro;
 	private int voltas;
 	private List<Integer> posicao;
 	private List<Long> tempo;
@@ -25,30 +26,39 @@ public class Carro {
 
 	// private Piloto piloto;  // esqueci-me disto, não deve ser mais preciso
 
+
+	public String getIdCarro() {
+		return idCarro;
+	}
+
+	public void setIdCarro(String idCarro) {
+		this.idCarro = idCarro;
+	}
+
 	/*
-	public boolean tentaUltrapassar(String GDU, Jogador frente){
-		// Alguém que faça esta merda
+        public boolean tentaUltrapassar(String GDU, Jogador frente){
+            // Alguém que faça esta merda
 
-		return false;
-	}
+            return false;
+        }
 
-	public boolean calculaDNF() {
-		//Outra
+        public boolean calculaDNF() {
+            //Outra
 
-		return false;
-	}
+            return false;
+        }
 
-	public boolean calculaOverall() {
-		//Mais Uma malta
+        public boolean calculaOverall() {
+            //Mais Uma malta
 
-		return false;
-	}
+            return false;
+        }
 
-	public void calculaTempo() {
-		// Boa Sorte
-		// Depois de calcular meter na lista de tempo :)
-	}
-*/
+        public void calculaTempo() {
+            // Boa Sorte
+            // Depois de calcular meter na lista de tempo :)
+        }
+    */
 	public float calculaDNF(String meteorologia){
 		float p = 0;
 		float m = 0;

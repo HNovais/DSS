@@ -1,5 +1,8 @@
 package ui;
 
+import RacingManager.IRacingManager;
+import RacingManager.RacingManagerFacade;
+
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -10,17 +13,16 @@ import java.util.stream.Collectors;
  * @author JFC
  * @version 20220919
  */
-public class TextUI {
-    public void run() {
-        //this.menu.run();
-        System.out.println("Ate breve!...");
-    }
-}
-/*
+//public class TextUI {
+//    public void run() {
+//        //this.menu.run();
+//        System.out.println("Ate breve!...");
+//    }
+//}
 
 public class TextUI {
     // O model tem a 'lógica de negócio'.
-    private ITurmasFacade model;
+    private IRacingManager model;
 
     // Menus da aplicação
     private Menu menu;
@@ -28,73 +30,74 @@ public class TextUI {
     // Scanner para leitura
     private Scanner scin;
 
-    */
 /**
      * Construtor.
      *
      * Cria os menus e a camada de negócio.
-     *//*
+     */
 
     public TextUI() {
         // Criar o menu
         this.menu = new Menu(new String[]{
-                "Adicionar Aluno",
-                "Consultar Aluno",
-                "Listar Alunos",
-                "Adicionar Turma",
-                "Mudar Sala à Turma",
-                "Listar Turmas",
-                "Adicionar Aluno a Turma",
-                "Remover Aluno da Turma",
-                "Listar Alunos de Turma"
+                "SimularCorrida",
+                "Adicionar Piloto",
+//                "Listar Alunos",
+//                "Adicionar Turma",
+//                "Mudar Sala à Turma",
+//                "Listar Turmas",
+//                "Adicionar Aluno a Turma",
+//                "Remover Aluno da Turma",
+//                "Listar Alunos de Turma"
         });
-        this.menu.setHandler(1, this::trataAdicionarAluno);
-        this.menu.setHandler(2, this::trataConsultarAluno);
-        this.menu.setHandler(3, this::trataListarAlunos);
-        this.menu.setHandler(4, this::trataAdicionarTurma);
-        this.menu.setHandler(5, this::trataMudarSalaTurma);
-        this.menu.setHandler(6, this::trataListarTurmas);
-        this.menu.setHandler(7, this::trataAdicionarAlunoATurma);
-        this.menu.setHandler(8, this::trataRemoverAlunoDaTurma);
-        this.menu.setHandler(9, this::trataListarAlunosTurma);
+        //this.menu.setHandler(1, this::simularCorrida);
+        //this.menu.setHandler(2, this::AdicionarPiloto);
+//        this.menu.setHandler(3, this::trataListarAlunos);
+//        this.menu.setHandler(4, this::trataAdicionarTurma);
+//        this.menu.setHandler(5, this::trataMudarSalaTurma);
+//        this.menu.setHandler(6, this::trataListarTurmas);
+//        this.menu.setHandler(7, this::trataAdicionarAlunoATurma);
+//        this.menu.setHandler(8, this::trataRemoverAlunoDaTurma);
+//        this.menu.setHandler(9, this::trataListarAlunosTurma);
 
-        this.model = new TurmasFacade();
+        this.model = new RacingManagerFacade();
         //this.menu.setPreCondition(7,
         //        ()-> this.model.haAlunos() && this .model.haTurmas());
         scin = new Scanner(System.in);
     }
 
-    */
+}
 /**
      * Executa o menu principal e invoca o método correspondente à opção seleccionada.
-     *//*
+     */
 
-    public void run() {
-        this.menu.run();
-        System.out.println("Até breve!...");
-    }
+//    public void run() {
+//        this.menu.run();
+//        System.out.println("Até breve!...");
+//    }
 
-    // Métodos auxiliares
-    private void trataAdicionarAluno() {
-        try {
-            System.out.println("Número da novo aluno: ");
-            String num = scin.nextLine();
-            if (!this.model.existeAluno(num)) {
-                System.out.println("Nome da novo aluno: ");
-                String nome = scin.nextLine();
-                System.out.println("Email da novo aluno: ");
-                String email = scin.nextLine();
-                this.model.adicionaAluno(new Aluno(num, nome, email));
-                System.out.println("Aluno adicionado");
-            } else {
-                System.out.println("Esse número de aluno já existe!");
-            }
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+//    // Métodos auxiliares
+//    private void AdicionarPiloto() {
+//        try {
+//            System.out.println("Nome do Piloto: ");
+//            String nomePiloto = scin.nextLine();
+//            if (!this.model.existePiloto(nomePiloto)) {
+//                System.out.println("Insere SVA: ");
+//                String SVA = scin.nextLine();
+//                System.out.println("Insere CTS: ");
+//                String CTS = scin.nextLine();
+//                this.model.adicionaPiloto(new Piloto(nomePiloto, SVA, CTS));
+//                System.out.println("Aluno adicionado");
+//            } else {
+//                System.out.println("Esse número de aluno já existe!");
+//            }
+//        }
+//        catch (NullPointerException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
+
+    /*
     private void trataConsultarAluno() {
         try {
             System.out.println("Número a consultar: ");
