@@ -30,8 +30,8 @@ public class CarroDAO {
 
     private CarroDAO() {
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
-             Statement statement = connection.createStatement()) {
-            String sql = "CREATE TABLE cars " +
+             Statement statement = conn.createStatement()) {
+            String sql = "CREATE TABLE IF NOT EXISTS cars " +
                     "(IdCarro TEXT PRIMARY KEY, " +
                     "voltas INTEGER NOT NULL, " +
                     "posicao INTEGER NOT NULL, " +

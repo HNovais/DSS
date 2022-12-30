@@ -20,14 +20,15 @@ public class TextUI {
         this.menu = new Menu(new String[]{
                 "Register",
                 "Login",
+                "Login as Admin",
         });
         this.menu.setHandler(1, this::handleRegister);
         this.menu.setHandler(2, this::handleLogin);
 
         this.model = new RacingManagerFacade();
         // Set the precondition for options that should only be available to logged in users
-        //this.menu.setPreCondition(1, () -> this.isLoggedIn);
-        //this.menu.setPreCondition(2, () -> this.isLoggedIn);
+        // this.menu.setPreCondition(1, () -> this.isLoggedIn);
+        // this.menu.setPreCondition(2, () -> this.isLoggedIn);
         scin = new Scanner(System.in);
     }
 

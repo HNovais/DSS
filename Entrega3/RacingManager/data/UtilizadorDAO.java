@@ -2,14 +2,14 @@ package data;
 
 import RacingManager.Utilizador;
 
+import java.sql.DriverManager;
 import java.sql.*;
 
 public class UtilizadorDAO {
-    private static UtilizadorDAO instance;
-    private Connection connection;
+    private static UtilizadorDAO singleton = null;
 
     private UtilizadorDAO() {
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection connection = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
              Statement statement = connection.createStatement()) {
             String sql = "CREATE TABLE users " +
                     "(username TEXT PRIMARY KEY, " +
@@ -24,15 +24,13 @@ public class UtilizadorDAO {
     }
 
     public static UtilizadorDAO getInstance() {
-        if (instance == null) {
-            instance = new UtilizadorDAO();
-        }
-        return instance;
+        if (UtilizadorDAO.singleton == null) singleton = new UtilizadorDAO();
+        return singleton;
     }
 
     public void put(Utilizador utilizador) {
         // Add a new user to the database
-        try {
+        try (Connection connection = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO users (username, password, ranking) VALUES (?, ?, ?)");
             statement.setString(1, utilizador.getUsername());
@@ -47,7 +45,7 @@ public class UtilizadorDAO {
     public Utilizador get(String username) {
         // Retrieve a user from the database by their username
         Utilizador utilizador = null;
-        try {
+        try (Connection connection = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM users WHERE username = ?");
             statement.setString(1, username);
@@ -66,7 +64,7 @@ public class UtilizadorDAO {
 
     public void remove(String username) {
         // Delete a user from the database
-        try {
+        try (Connection connection = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM users WHERE username = ?");
             statement.setString(1, username);
@@ -79,7 +77,7 @@ public class UtilizadorDAO {
     public int size() {
         // Return the number of users in the database
         int size = 0;
-        try {
+        try (Connection connection = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM users");
             if (resultSet.next()) {
@@ -93,7 +91,7 @@ public class UtilizadorDAO {
 
     public void update(Utilizador utilizador) {
         // Update an existing user in the database
-        try {
+        try (Connection connection = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(
                     "UPDATE users SET password = ?, ranking = ? WHERE username = ?");
             statement.setString(1, utilizador.getPassword());
