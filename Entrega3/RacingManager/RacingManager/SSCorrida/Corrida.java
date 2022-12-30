@@ -12,6 +12,7 @@ public class Corrida {
 	private Map<String, List<Long>> tempo = new HashMap<>();
 	private String meteorologia;
 	private Circuito circuito;
+
 	private Map<String, List<Carro>> posCategoria = new HashMap<>();
 
 	public String simulaCorrida(){

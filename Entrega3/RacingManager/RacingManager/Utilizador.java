@@ -6,6 +6,21 @@ public class Utilizador {
 	private String password;
 	private int ranking;
 
+	public Utilizador() {
+		this.username = "";
+		this.password = "";
+		this.ranking = 0;
+	}
+
+    public Utilizador(String username, String password) {
+		this.username = username;
+		this.password = password;
+		this.ranking = 0;
+    }
+
+
+
+
 	// Getters and Setters
 	public String getUsername() {
 		return username;

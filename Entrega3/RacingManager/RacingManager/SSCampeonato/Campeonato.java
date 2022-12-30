@@ -19,7 +19,7 @@ public class Campeonato {
 	private Map<String, List<Integer>> pontuacao;
 	// private Map<String, List<String>> pontCategoria;
 	private CorridaFacade corrF;
-	CorridaDAO corrDAO;
+	// CorridaDAO corrDAO;
 
 	/**
 	 * 
@@ -78,7 +78,8 @@ public class Campeonato {
 
 	public Corrida indicaCorrida() {
 		int cont = getContador();
-		return corrDAO.get(corridas.get(cont));
+		// return corrDAO.get(corridas.get(cont));
+		return corridas.get(cont);
 	}
 
 	public int indicaMeteorologia() {

@@ -25,7 +25,6 @@ public class Carro {
 	private String marca;
 	private String modelo;
 	private String id;
-
 	private Piloto piloto;
 
 	public Piloto getPiloto() {

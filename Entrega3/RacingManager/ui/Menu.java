@@ -63,7 +63,7 @@ public class Menu {
         this.handlers = new ArrayList<>();
         this.opcoes.forEach(s-> {
             this.disponivel.add(()->true);
-            this.handlers.add(()->System.out.println("\nATENÇÃO: Opção não implementada!"));
+            this.handlers.add(()->System.out.println("\nATENÇÃO: Opcao não implementada!"));
         });
     }
 
@@ -139,7 +139,7 @@ public class Menu {
         op = readOption();
         // testar pré-condição
         if (op>0 && !this.disponivel.get(op-1).validate()) {
-            System.out.println("Opção indisponível!");
+            System.out.println("Opcao indisponível!");
         } else if (op>0) {
             // executar handler
             this.handlers.get(op-1).execute();
@@ -158,7 +158,7 @@ public class Menu {
             op = readOption();
             // testar pré-condição
             if (op>0 && !this.disponivel.get(op-1).validate()) {
-                System.out.println("Opção indisponível! Tente novamente.");
+                System.out.println("Opcao indisponivel! Tente novamente.");
             } else if (op>0) {
                 // executar handler
                 this.handlers.get(op-1).execute();
@@ -203,7 +203,7 @@ public class Menu {
     private int readOption() {
         int op;
 
-        System.out.print("Opção: ");
+        System.out.print("Opcao: ");
         try {
             String line = is.nextLine();
             op = Integer.parseInt(line);
@@ -212,7 +212,7 @@ public class Menu {
             op = -1;
         }
         if (op<0 || op>this.opcoes.size()) {
-            System.out.println("Opção Inválida!!!");
+            System.out.println("Opcao Invalida!!!");
             op = -1;
         }
         return op;
