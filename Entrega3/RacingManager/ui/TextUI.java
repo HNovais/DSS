@@ -1,11 +1,14 @@
 package ui;
 
-import RacingManager.IRacingManager;
-import RacingManager.RacingManagerFacade;
-import RacingManager.Utilizador;
-import data.UtilizadorDAO;
+import RacingManager.*;
+import RacingManager.SSCampeonato.Campeonato;
+import RacingManager.SSCarro.Carro;
+import RacingManager.SSCorrida.Corrida;
+import data.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -14,13 +17,19 @@ public class TextUI {
     private Menu menu;
     private Scanner scin;
     private boolean isLoggedIn;
+    private final int MAX = 6;
+
+    public static void clearWindow() {
+        for (int i = 0;i<75;i++){
+            System.out.println();
+        }
+    }
 
     public TextUI() {
         // Criar o menu
         this.menu = new Menu(new String[]{
                 "Register",
                 "Login",
-                //"Login as Admin",
         });
         this.menu.setHandler(1, this::handleRegister);
         this.menu.setHandler(2, this::handleLogin);
@@ -94,39 +103,98 @@ public class TextUI {
     private void showSubMenu() {
         // Create the submenu
         Menu subMenu = new Menu(new String[] {
-                "Configurations",
+                "Play Championship",
                 "Race Simulation",
-                //"Logout"
         });
 
         // Set up the handlers for each option in the submenu
-        subMenu.setHandler(1, this::handleConfigurations);
+        subMenu.setHandler(1, this::handlePlayChampionship);
         //subMenu.setHandler(2, this::handleRaceSimulation);
 
         // Run the submenu
         subMenu.run();
     }
 
-    private void handleConfigurations() {
-        // Show the sub-sub menu
-        showSubSubMenu();
+    private void handlePlayChampionship() {
+        // Colocar ocasioes de erro e listas vazias etc
+        System.out.println("How many players will play (Max: " + MAX + "): ");
+        int nJogadores = scin.nextInt();
+
+        if(nJogadores > MAX) {
+            System.out.println("Error: Number Invalid ");
+            // Run the submenu
+            showSubMenu();
+        }
+
+        int i = 0;
+        while(i < nJogadores) {
+
+            CampeonatoDAO campeonatoDAO = CampeonatoDAO.getInstance();
+
+            Menu Championship = new Menu("Select one of the following Championships:", campeonatoDAO.getCampsName());
+            System.out.println("Enter your selection: ");
+            String Campeonato = scin.nextLine();
+
+            clearWindow();
+
+            Campeonato c = campeonatoDAO.get(Campeonato);
+            // c.setParticipantes(nJogadores);
+            List<Circuito> circuitos = new ArrayList<>();
+            for (Corrida corrida : c.getCorridas()) {
+                circuitos.add(corrida.getCircuito());
+            }
+
+            for (Circuito circuito : circuitos) {
+                System.out.println("Name: " + circuito.getNomeCircuito() + "and Distance: " + circuito.getDistancia());
+            }
+
+            clearWindow();
+
+            CarroDAO carroDAO = CarroDAO.getInstance();
+            Map<String, Carro> carros = carroDAO.getAll();
+            for (Carro carro : carros.values()) {
+                System.out.println("ID: " + carro.getIdCarro() + "HP: " + carro.getPotencia() + "Brand: " + carro.getMarca() + "Model: " + carro.getModelo() + "Category: " + carro.getCategoria());
+            }
+            System.out.println("Enter the ID: ");
+            String IDCarro = scin.nextLine();
+            Carro Carro = carroDAO.get(IDCarro);
+
+            clearWindow();
+
+            PilotoDAO pilotoDAO = PilotoDAO.getInstance();
+            Map<String, Piloto> pilotos = pilotoDAO.getAll();
+            for (Piloto piloto : pilotos.values()) {
+                // Nao sei se e necessario imprimir mais coisas
+                System.out.println("Nome: " + piloto.getNomePiloto());
+            }
+            System.out.println("Enter the ID: ");
+            String NomePiloto = scin.nextLine();
+            Piloto piloto = pilotoDAO.get(NomePiloto);
+
+            Jogador j = new Jogador();
+            j.setPiloto(piloto);
+            j.setCarro(Carro);
+            j.setId("i");
+        }
+        clearWindow();
+
+        showSub2Menu();
     }
 
-    private void showSubSubMenu() {
+    private void showSub2Menu() {
         // Create the submenu
-        Menu subMenu = new Menu(new String[] {
+        Menu sub2Menu = new Menu(new String[] {
                 "Select Championship",
-                "Choose Car",
-                "Choose Pilot",
+                "Select Car",
+                "Select Pilot",
         });
 
         // Set up the handlers for each option in the submenu
-        //subMenu.setHandler(1, this::handleSelectChampionship);
-        //subMenu.setHandler(2, this::handleChooseCar);
-        //subMenu.setHandler(2, this::handleChoosePilot);
+        sub2Menu.setHandler(1, this::handlePlayChampionship);
+        //subMenu.setHandler(2, this::handleRaceSimulation);
 
         // Run the submenu
-        subMenu.run();
+        sub2Menu.run();
     }
 
 }

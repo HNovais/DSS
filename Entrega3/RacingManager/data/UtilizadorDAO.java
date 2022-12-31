@@ -23,7 +23,6 @@ public class UtilizadorDAO {
         }
     }
 
-
     public static UtilizadorDAO getInstance() {
         if (UtilizadorDAO.singleton == null) singleton = new UtilizadorDAO();
         return singleton;

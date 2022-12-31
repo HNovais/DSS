@@ -10,6 +10,29 @@ public class Jogador {
 	private Piloto piloto;
 	private int afinacoes;
 
+	public Jogador() {
+		this.id = "";
+		this.carro = null;
+		this.piloto = null;
+		this.afinacoes = 0;
+	}
+
+	public Carro getCarro() {
+		return carro;
+	}
+
+	public void setCarro(Carro carro) {
+		this.carro = carro;
+	}
+
+	public int getAfinacoes() {
+		return afinacoes;
+	}
+
+	public void setAfinacoes(int afinacoes) {
+		this.afinacoes = afinacoes;
+	}
+
 	/**
 	 * 
 	 * @param ca

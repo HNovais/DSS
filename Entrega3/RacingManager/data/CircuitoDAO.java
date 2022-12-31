@@ -11,6 +11,14 @@ public class CircuitoDAO {
     private static CircuitoDAO instance;
     private Connection connection;
 
+    {
+        try {
+            connection = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private CircuitoDAO() {
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
              Statement statement = connection.createStatement()) {
@@ -197,6 +205,25 @@ public class CircuitoDAO {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<Circuito> getAll() {
+        List<Circuito> circuitos = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+             Statement statement = conn.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM circuits")) {
+            while (resultSet.next()) {
+                String nomeCircuito = resultSet.getString("nomeCircuito");
+                int distancia = resultSet.getInt("distância");
+                Circuito circuito = new Circuito();
+                circuito.setNomeCircuito(nomeCircuito);
+                circuito.setDistancia(distancia);
+                circuitos.add(circuito);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return circuitos;
     }
 }
 

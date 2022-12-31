@@ -2,12 +2,6 @@ package ui;
 
 import java.util.*;
 
-/**
- * Esta classe implementa um menu em modo texto.
- *
- * @author José Creissac Campos
- * @version v3.4 (20210930)
- */
 public class Menu {
 
     // Interfaces auxiliares

@@ -4,11 +4,21 @@ import RacingManager.SSCarro.Carro;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CarroDAO {
     private static CarroDAO instance;
     private Connection connection;
+
+    {
+        try {
+            connection = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     private List<Integer> parseList(String listString) {
         List<Integer> list = new ArrayList<>();
@@ -191,5 +201,36 @@ public class CarroDAO {
             e.printStackTrace();
         }
     }
-}
 
+    public Map<String, Carro> getAll() {
+        Map<String, Carro> carros = new HashMap<>();
+        try {
+            connection.setAutoCommit(false);
+
+            Statement statement = connection.createStatement();
+            String sql = "SELECT idCarro, potencia, marca, modelo, categoria FROM cars";
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                String idCarro = resultSet.getString("idCarro");
+                int potencia = resultSet.getInt("potencia");
+                String marca = resultSet.getString("marca");
+                String modelo = resultSet.getString("modelo");
+                String categoria = resultSet.getString("categoria");
+
+                Carro carro = new Carro();
+                carro.setIdCarro(idCarro);
+                carro.setPotencia(potencia);
+                carro.setMarca(marca);
+                carro.setModelo(modelo);
+                carro.setCategoria(categoria);
+                carros.put(idCarro, carro);
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            // Erro a ler tabela...
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return carros;
+    }
+}

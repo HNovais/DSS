@@ -11,15 +11,51 @@ public class Campeonato {
 
 	private String nome;
 	private int participantes;
-	private int contador = 0;
 	private List<Corrida> corridas;
 	private Set<Jogador> jogadores = new HashSet<>();
 	private Map<String, List<Integer>> classificacao;
-
+	private int contador = 0;
 	private Map<String, List<Integer>> pontuacao;
 	// private Map<String, List<String>> pontCategoria;
 	private CorridaFacade corrF;
 	// CorridaDAO corrDAO;
+
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public int getParticipantes() {
+		return participantes;
+	}
+
+	public void setParticipantes(int participantes) {
+		this.participantes = participantes;
+	}
+
+	public void setContador(int contador) {
+		this.contador = contador;
+	}
+
+	public List<Corrida> getCorridas() {
+		return corridas;
+	}
+
+	public void setCorridas(List<Corrida> corridas) {
+		this.corridas = corridas;
+	}
+
+	public Set<Jogador> getJogadores() {
+		return jogadores;
+	}
+
+	public void setJogadores(Set<Jogador> jogadores) {
+		this.jogadores = jogadores;
+	}
 
 	/**
 	 * 

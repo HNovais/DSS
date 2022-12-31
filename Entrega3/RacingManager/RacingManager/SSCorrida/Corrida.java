@@ -7,12 +7,12 @@ import java.util.*;
 
 public class Corrida {
 
+	private int id;
 	private int voltas;
 	private List<Carro> posicao = new ArrayList<>();
 	private Map<String, List<Long>> tempo = new HashMap<>();
 	private String meteorologia;
 	private Circuito circuito;
-
 	private Map<String, List<Carro>> posCategoria = new HashMap<>();
 
 	public String simulaCorrida(){
@@ -130,5 +130,61 @@ public class Corrida {
 			}
 			posCategoria.get(categoria).add(carro);
 		}
+	}
+
+	public int getVoltas() {
+		return voltas;
+	}
+
+	public void setVoltas(int voltas) {
+		this.voltas = voltas;
+	}
+
+	public List<Carro> getPosicao() {
+		return posicao;
+	}
+
+	public void setPosicao(List<Carro> posicao) {
+		this.posicao = posicao;
+	}
+
+	public Map<String, List<Long>> getTempo() {
+		return tempo;
+	}
+
+	public void setTempo(Map<String, List<Long>> tempo) {
+		this.tempo = tempo;
+	}
+
+	public String getMeteorologia() {
+		return meteorologia;
+	}
+
+	public void setMeteorologia(String meteorologia) {
+		this.meteorologia = meteorologia;
+	}
+
+	public Circuito getCircuito() {
+		return circuito;
+	}
+
+	public void setCircuito(Circuito circuito) {
+		this.circuito = circuito;
+	}
+
+	public Map<String, List<Carro>> getPosCategoria() {
+		return posCategoria;
+	}
+
+	public void setPosCategoria(Map<String, List<Carro>> posCategoria) {
+		this.posCategoria = posCategoria;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

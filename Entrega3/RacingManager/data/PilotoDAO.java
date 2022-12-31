@@ -3,14 +3,15 @@ package data;
 import RacingManager.Piloto;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PilotoDAO {
-    private static PilotoDAO instance;
-    private Connection connection;
+    private static PilotoDAO singleton = null;
 
     private PilotoDAO() {
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
-             Statement statement = connection.createStatement()) {
+             Statement statement = conn.createStatement()) {
             String sql = "CREATE TABLE pilots " +
                     "(nomePiloto TEXT PRIMARY KEY, " +
                     "SVA REAL NOT NULL, " +
@@ -24,16 +25,16 @@ public class PilotoDAO {
     }
 
     public static PilotoDAO getInstance() {
-        if (instance == null) {
-            instance = new PilotoDAO();
+        if (singleton == null) {
+            singleton = new PilotoDAO();
         }
-        return instance;
+        return singleton;
     }
 
     public void put(Piloto piloto) {
         // Add a new pilot to the database
-        try {
-            PreparedStatement statement = connection.prepareStatement(
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
+            PreparedStatement statement = conn.prepareStatement(
                     "INSERT INTO pilots (nomePiloto, SVA, CTS) VALUES (?, ?, ?)");
             statement.setString(1, piloto.getNomePiloto());
             statement.setFloat(2, piloto.getSVA());
@@ -47,8 +48,8 @@ public class PilotoDAO {
     public Piloto get(String nomePiloto) {
         // Retrieve a pilot from the database by their name
         Piloto piloto = null;
-        try {
-            PreparedStatement statement = connection.prepareStatement(
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
+            PreparedStatement statement = conn.prepareStatement(
                     "SELECT * FROM pilots WHERE nomePiloto = ?");
             statement.setString(1, nomePiloto);
             ResultSet resultSet = statement.executeQuery();
@@ -66,8 +67,8 @@ public class PilotoDAO {
 
     public void remove(String nomePiloto) {
         // Delete a pilot from the database
-        try {
-            PreparedStatement statement = connection.prepareStatement(
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
+            PreparedStatement statement = conn.prepareStatement(
                     "DELETE FROM pilots WHERE nomePiloto = ?");
             statement.setString(1, nomePiloto);
             statement.executeUpdate();
@@ -79,8 +80,8 @@ public class PilotoDAO {
     public int size() {
         // Return the number of pilots in the database
         int size = 0;
-        try {
-            Statement statement = connection.createStatement();
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
+            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM pilots");
             if (resultSet.next()) {
                 size = resultSet.getInt(1);
@@ -93,8 +94,8 @@ public class PilotoDAO {
 
     public void update(Piloto piloto) {
         // Update an existing pilot in the database
-        try {
-            PreparedStatement statement = connection.prepareStatement(
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
+            PreparedStatement statement = conn.prepareStatement(
                     "UPDATE pilots SET SVA = ?, CTS = ? WHERE nomePiloto = ?");
             statement.setFloat(1, piloto.getSVA());
             statement.setFloat(2, piloto.getCTS());
@@ -103,6 +104,24 @@ public class PilotoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Map<String, Piloto> getAll() {
+        Map<String, Piloto> pilots = new HashMap<>();
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM pilots");
+            while (resultSet.next()) {
+                Piloto piloto = new Piloto();
+                piloto.setNomePiloto(resultSet.getString("nomePiloto"));
+                piloto.setSVA(resultSet.getFloat("SVA"));
+                piloto.setCTS(resultSet.getFloat("CTS"));
+                pilots.put(piloto.getNomePiloto(), piloto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pilots;
     }
 }
 
