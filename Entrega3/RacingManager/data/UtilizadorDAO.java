@@ -11,9 +11,9 @@ public class UtilizadorDAO {
     private UtilizadorDAO() {
         try (Connection connection = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
              Statement statement = connection.createStatement()) {
-            String sql = "CREATE TABLE users " +
-                    "(username TEXT PRIMARY KEY, " +
-                    "password TEXT NOT NULL, " +
+            String sql = "CREATE TABLE IF NOT EXISTS users " +
+                    "(username varchar(45) PRIMARY KEY, " +
+                    "password varchar(45) NOT NULL, " +
                     "ranking INTEGER NOT NULL)";
             statement.executeUpdate(sql);
         } catch (SQLException e) {
@@ -22,6 +22,7 @@ public class UtilizadorDAO {
             throw new NullPointerException(e.getMessage());
         }
     }
+
 
     public static UtilizadorDAO getInstance() {
         if (UtilizadorDAO.singleton == null) singleton = new UtilizadorDAO();

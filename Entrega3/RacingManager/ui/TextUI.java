@@ -20,7 +20,7 @@ public class TextUI {
         this.menu = new Menu(new String[]{
                 "Register",
                 "Login",
-                "Login as Admin",
+                //"Login as Admin",
         });
         this.menu.setHandler(1, this::handleRegister);
         this.menu.setHandler(2, this::handleLogin);
@@ -48,12 +48,17 @@ public class TextUI {
 
         // Use the UtilizadorDAO to add the new user to the database
         UtilizadorDAO utilizadorDAO = UtilizadorDAO.getInstance();
-        utilizadorDAO.put(utilizador);
-
-        System.out.println("Successfully registered!");
-
-        // Show the submenu
-        showSubMenu();
+        if(utilizadorDAO.get(username) == null) {
+            utilizadorDAO.put(utilizador);
+            System.out.println("Successfully registered!");
+            // Show the submenu
+            showSubMenu();
+        }
+        else {
+            System.out.println("Name in use! Try again!");
+            // Return to the main menu
+            this.menu.run();
+        }
     }
 
     private void handleLogin() {
@@ -68,10 +73,14 @@ public class TextUI {
 
         if (utilizador == null) {
             // User not found
-            System.out.println("Invalid Username or Password");
+            System.out.println("User not found");
+            // Return to the main menu
+            this.menu.run();
         } else if (!utilizador.getPassword().equals(password)) {
             // Incorrect password
-            System.out.println("Invalid Username or Password");
+            System.out.println("Invalid Password");
+            // Return to the main menu
+            this.menu.run();
         } else {
             // Successful login
             this.isLoggedIn = true;
@@ -91,8 +100,30 @@ public class TextUI {
         });
 
         // Set up the handlers for each option in the submenu
-        //subMenu.setHandler(1, this::handleConfigurations);
+        subMenu.setHandler(1, this::handleConfigurations);
         //subMenu.setHandler(2, this::handleRaceSimulation);
+
+        // Run the submenu
+        subMenu.run();
+    }
+
+    private void handleConfigurations() {
+        // Show the sub-sub menu
+        showSubSubMenu();
+    }
+
+    private void showSubSubMenu() {
+        // Create the submenu
+        Menu subMenu = new Menu(new String[] {
+                "Select Championship",
+                "Choose Car",
+                "Choose Pilot",
+        });
+
+        // Set up the handlers for each option in the submenu
+        //subMenu.setHandler(1, this::handleSelectChampionship);
+        //subMenu.setHandler(2, this::handleChooseCar);
+        //subMenu.setHandler(2, this::handleChoosePilot);
 
         // Run the submenu
         subMenu.run();
