@@ -1,5 +1,6 @@
 package data;
 
+import RacingManager.Circuito;
 import RacingManager.SSCampeonato.Campeonato;
 import RacingManager.SSCorrida.Corrida;
 
@@ -34,15 +35,15 @@ public class CampeonatoDAO {
     public Campeonato get(String nome) {
         Campeonato campeonato = null;
         try {
-            String sql = "SELECT * FROM campeonatos WHERE nome = ?";
+            String sql = "SELECT * FROM campeonato WHERE nomeCampeonato = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, nome);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String nomeCampeonato = resultSet.getString("nome");
-                int participantes = resultSet.getInt("participantes");
+                String nomeCampeonato = resultSet.getString("nomeCampeonato");
+                //int participantes = resultSet.getInt("participantes");
                 campeonato = new Campeonato();
-                campeonato.setParticipantes(participantes);
+                //campeonato.setParticipantes(participantes);
                 campeonato.setNome(nomeCampeonato);
             }
         } catch (SQLException e) {
@@ -53,7 +54,7 @@ public class CampeonatoDAO {
 
     public void put(Campeonato campeonato) {
         try {
-            String sql = "INSERT INTO campeonatos (nome, participantes) VALUES (?, ?)";
+            String sql = "INSERT INTO campeonato (nomeCampeonato, participantes) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, campeonato.getNome());
             statement.setInt(2, campeonato.getParticipantes());
@@ -65,7 +66,7 @@ public class CampeonatoDAO {
 
     public void remove(String nome) {
         try {
-            String sql = "DELETE FROM campeonatos WHERE nome = ?";
+            String sql = "DELETE FROM campeonato WHERE nomeCampeonato = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, nome);
             statement.executeUpdate();
@@ -77,7 +78,7 @@ public class CampeonatoDAO {
     public int size() {
         int count = 0;
         try {
-            String sql = "SELECT COUNT(*) FROM campeonatos";
+            String sql = "SELECT COUNT(*) FROM campeonato";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             if (resultSet.next()) {
@@ -91,7 +92,7 @@ public class CampeonatoDAO {
 
     public void update(Campeonato campeonato) {
         try {
-            String sql = "UPDATE campeonatos SET participantes = ? WHERE nome = ?";
+            String sql = "UPDATE campeonato SET participantes = ? WHERE nomeCampeonato = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, campeonato.getParticipantes());
             statement.setString(2, campeonato.getNome());
@@ -101,22 +102,21 @@ public class CampeonatoDAO {
         }
     }
 
-    // Para indicar os nomes dos campeonatos nas opções de maneira a escolher um para configurar
+    // Para indicar os nomes dos campeonato nas opções de maneira a escolher um para configurar
     public List<String> getCampsName(){
         List<String> campNames = null;
         try {
             campNames = new ArrayList<>();
-            String query = "SELECT nome FROM campeonatos";
+            String query = "SELECT nomeCampeonato FROM campeonato";
             Statement stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(query);
 
             while (resultSet.next()) {
-                campNames.add(resultSet.getString("nome"));
+                campNames.add(resultSet.getString("nomeCampeonato"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return campNames;
     }
 
@@ -124,9 +124,9 @@ public class CampeonatoDAO {
         Map<String, Campeonato> campeonatos = new HashMap<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT nome FROM campeonatos");
+            ResultSet resultSet = statement.executeQuery("SELECT nomeCampeonato FROM campeonato");
             while (resultSet.next()) {
-                String nome = resultSet.getString("nome");
+                String nome = resultSet.getString("nomeCampeonato");
                 Campeonato campeonato = get(nome);
                 campeonatos.put(nome, campeonato);
             }
@@ -146,5 +146,12 @@ public class CampeonatoDAO {
         return corridas;
     }
 
+    public List<Circuito> getCircuitosCampeonato(Campeonato campeonato){
+        List<Circuito> circuitos = new ArrayList<>();
+        CircuitoDAO circuitoDAO = CircuitoDAO.getInstance();
 
+        circuitos = circuitoDAO.getCircuitos(campeonato.getNome());
+
+        return circuitos;
+    }
 }

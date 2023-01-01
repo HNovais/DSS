@@ -2,6 +2,8 @@ package data;
 
 import RacingManager.Circuito;
 import RacingManager.Elemento;
+import org.w3c.dom.Element;
+import org.w3c.dom.css.CSSImportRule;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,17 +24,17 @@ public class CircuitoDAO {
     private CircuitoDAO() {
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
              Statement statement = connection.createStatement()) {
-            String sql = "CREATE TABLE circuits " +
+            String sql = "CREATE TABLE IF NOT EXISTS circuito" +
                     "(nomeCircuito TEXT PRIMARY KEY, " +
                     "distância INTEGER NOT NULL)";
             statement.executeUpdate(sql);
 
-            sql = "CREATE TABLE elements " +
+            sql = "CREATE TABLE IF NOT EXISTS elemento " +
                     "(categoria TEXT NOT NULL, " +
                     "GDU TEXT NOT NULL, " +
-                    "nomeCircuito TEXT NOT NULL, " +
+                    "circuitoNome TEXT NOT NULL, " +
                     "PRIMARY KEY (categoria, nomeCircuito), " +
-                    "FOREIGN KEY (nomeCircuito) REFERENCES circuits(nomeCircuito))";
+                    "FOREIGN KEY (circuitoNome) REFERENCES circuits(nomeCircuito))";
             statement.executeUpdate(sql);
         } catch (SQLException e) {
             // Erro a criar tabela...
@@ -56,7 +58,7 @@ public class CircuitoDAO {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO circuits (nomeCircuito, distância) VALUES (?, ?)");
             statement.setString(1, circuito.getNomeCircuito());
-            statement.setInt(2, circuito.getDistancia());
+            //statement.setInt(2, circuito.getDistancia());
             statement.executeUpdate();
 
             statement = connection.prepareStatement(
@@ -97,7 +99,7 @@ public class CircuitoDAO {
             if (resultSet.next()) {
                 circuito = new Circuito();
                 circuito.setNomeCircuito(resultSet.getString("nomeCircuito"));
-                circuito.setDistancia(resultSet.getInt("distância"));
+                //circuito.setDistancia(resultSet.getInt("distância"));
 
                 statement = connection.prepareStatement(
                         "SELECT * FROM elements WHERE nomeCircuito = ?");
@@ -171,7 +173,7 @@ public class CircuitoDAO {
             connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement(
                     "UPDATE circuits SET distância = ? WHERE nomeCircuito = ?");
-            statement.setInt(1, circuito.getDistancia());
+            //statement.setInt(1, circuito.getDistancia());
             statement.setString(2, circuito.getNomeCircuito());
             statement.executeUpdate();
 
@@ -214,16 +216,39 @@ public class CircuitoDAO {
              ResultSet resultSet = statement.executeQuery("SELECT * FROM circuits")) {
             while (resultSet.next()) {
                 String nomeCircuito = resultSet.getString("nomeCircuito");
-                int distancia = resultSet.getInt("distância");
+                //int distancia = resultSet.getInt("distância");
                 Circuito circuito = new Circuito();
                 circuito.setNomeCircuito(nomeCircuito);
-                circuito.setDistancia(distancia);
+                //circuito.setDistancia(distancia);
                 circuitos.add(circuito);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return circuitos;
     }
+
+    public List<Circuito> getCircuitos(String campeonatoID){
+        List <Circuito> circuitos = new ArrayList<>();
+        try {
+            String sql = "SELECT nomeCircuito FROM circuito JOIN campeonato ON circuito.campeonatoNome = campeonato.nomeCampeonato WHERE campeonato.nomeCampeonato = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, campeonatoID);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                String nomeCircuito = resultSet.getString("nomeCircuito");
+                Circuito circuito = new Circuito();
+                circuito.setNomeCircuito(nomeCircuito);
+                circuito.setElementos(ElementoDAO.getInstance().getElementos(nomeCircuito));
+                circuitos.add(circuito);
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return circuitos;
+    }
+
 }
 

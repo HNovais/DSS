@@ -41,7 +41,7 @@ public class CarroDAO {
     private CarroDAO() {
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
              Statement statement = conn.createStatement()) {
-            String sql = "CREATE TABLE IF NOT EXISTS cars " +
+            String sql = "CREATE TABLE IF NOT EXISTS carro " +
                     "(IdCarro TEXT PRIMARY KEY, " +
                     "voltas INTEGER NOT NULL, " +
                     "posicao INTEGER NOT NULL, " +
@@ -78,8 +78,8 @@ public class CarroDAO {
             connection.setAutoCommit(false);
 
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO cars (idCarro, voltas, posicao, tempo, fiabilidade, potencia, cilindrada, PAC, pneus, motor, downforce, categoria, DNF, marca, modelo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            statement.setString(1, carro.getIdCarro());
+                    "INSERT INTO carro (idCarro, voltas, posicao, tempo, fiabilidade, potencia, cilindrada, PAC, pneus, motor, downforce, categoria, DNF, marca, modelo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            statement.setInt(1, carro.getIdCarro());
             statement.setInt(2, carro.getVoltas());
             statement.setArray(3, connection.createArrayOf("INTEGER", carro.getPosicao().toArray()));
             statement.setArray(4, connection.createArrayOf("BIGINT", carro.getTempo().toArray()));
@@ -118,7 +118,7 @@ public class CarroDAO {
         Carro carro = null;
         try {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM carros WHERE idCarro = ?");
+                    "SELECT * FROM carro WHERE idCarro = ?");
             statement.setString(1, idCarro);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -143,7 +143,7 @@ public class CarroDAO {
                 carro.setDNF(resultSet.getBoolean("DNF"));
                 carro.setMarca(resultSet.getString("marca"));
                 carro.setModelo(resultSet.getString("modelo"));
-                carro.setId(resultSet.getString("idCarro"));
+                carro.setId(resultSet.getInt("idCarro"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -166,7 +166,7 @@ public class CarroDAO {
     public int size() {
         int size = 0;
         try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT COUNT(*) FROM carros")) {
+                "SELECT COUNT(*) FROM carro")) {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 size = resultSet.getInt(1);
@@ -195,23 +195,21 @@ public class CarroDAO {
             statement.setBoolean(12, carro.getDNF());
             statement.setString(13, carro.getMarca());
             statement.setString(14, carro.getModelo());
-            statement.setString(15, carro.getId());
+            statement.setInt(15, carro.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Map<String, Carro> getAll() {
-        Map<String, Carro> carros = new HashMap<>();
+    public List<Carro> getAll() {
+        List<Carro> carros = new ArrayList<>();
         try {
-            connection.setAutoCommit(false);
-
             Statement statement = connection.createStatement();
-            String sql = "SELECT idCarro, potencia, marca, modelo, categoria FROM cars";
+            String sql = "SELECT idCarro, potencia, marca, modelo, categoria FROM carro";
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                String idCarro = resultSet.getString("idCarro");
+                int idCarro = resultSet.getInt("idCarro");
                 int potencia = resultSet.getInt("potencia");
                 String marca = resultSet.getString("marca");
                 String modelo = resultSet.getString("modelo");
@@ -223,13 +221,10 @@ public class CarroDAO {
                 carro.setMarca(marca);
                 carro.setModelo(modelo);
                 carro.setCategoria(categoria);
-                carros.put(idCarro, carro);
+                carros.add(carro);
             }
-            connection.commit();
         } catch (SQLException e) {
-            // Erro a ler tabela...
             e.printStackTrace();
-            throw new NullPointerException(e.getMessage());
         }
         return carros;
     }

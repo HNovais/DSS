@@ -5,6 +5,16 @@ public class Elemento {
 	private String categoria;
 	private String GDU;
 
+	public Elemento(String categoria, String gdu){
+		this.categoria = categoria;
+		this.GDU = gdu;
+	}
+
+	public Elemento(){
+		this.categoria = null;
+		this.GDU = null;
+	}
+
 	public String getGDU() {
 		return GDU;
 	}

@@ -9,10 +9,12 @@ import java.util.*;
 
 public class Campeonato {
 
+	private int id;
 	private String nome;
 	private int participantes;
-	private List<Corrida> corridas;
-	private Set<Jogador> jogadores = new HashSet<>();
+	private List<Corrida> corridas = new ArrayList<>();
+	public List<Circuito> circuitos = new ArrayList<>();
+	public Set<Jogador> jogadores = new HashSet<>();
 	private Map<String, List<Integer>> classificacao;
 	private int contador = 0;
 	private Map<String, List<Integer>> pontuacao;
@@ -20,6 +22,7 @@ public class Campeonato {
 	private CorridaFacade corrF;
 	// CorridaDAO corrDAO;
 
+	public void setCircuitos(List<Circuito> circuitos){ this.circuitos = circuitos; }
 
 	public String getNome() {
 		return nome;
@@ -55,6 +58,15 @@ public class Campeonato {
 
 	public void setJogadores(Set<Jogador> jogadores) {
 		this.jogadores = jogadores;
+	}
+
+	public Corrida nextCorrida(int i){
+		Circuito circuito = circuitos.get(i);
+
+		Corrida corrida = new Corrida(circuito);
+		corrida.setMeteorologia();
+
+		return corrida;
 	}
 
 	/**

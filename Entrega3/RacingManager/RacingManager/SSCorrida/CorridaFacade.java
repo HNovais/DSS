@@ -18,7 +18,7 @@ public class CorridaFacade implements ICorrida {
 		if (randomDouble < 0.5) {
 			return "Chuva"; // Quando é 0
 		} else {
-			return "Tempo seco"; // Quando é 1
+			return "Seco"; // Quando é 1
 		}
 	}
 

@@ -15,6 +15,49 @@ public class Corrida {
 	private Circuito circuito;
 	private Map<String, List<Carro>> posCategoria = new HashMap<>();
 
+	public Corrida(int id, Circuito circuito){
+		this.id = 0;
+		this.voltas = 5;
+		this.posicao = new ArrayList<>();
+		this.tempo = new HashMap<>();
+		this.meteorologia = "Seco";
+		this.circuito = circuito;
+		this.posCategoria = new HashMap<>();
+	}
+
+	public Corrida(){
+		this.voltas = 5;
+		this.posicao = new ArrayList<>();
+		this.tempo = new HashMap<>();
+		this.meteorologia = "Seco";
+		this.posCategoria = new HashMap<>();
+	}
+
+	public Corrida(Circuito circuito){
+		this.voltas = 5;
+		this.posicao = new ArrayList<>();
+		this.tempo = new HashMap<>();
+		this.meteorologia = "Seco";
+		this.posCategoria = new HashMap<>();
+	}
+
+	public void setMeteorologia(){
+		double randomDouble = Math.random();
+
+		// If the random number is less than 0.5, return 0. Otherwise, return 1.
+		if (randomDouble < 0.5) {
+			this.meteorologia = "Chuva"; // Quando é 0
+		} else {
+			this.meteorologia =  "Seco"; // Quando é 1
+		}
+	}
+
+	public void addParticipantes(Set<Jogador> jogadores){
+		for(Jogador j : jogadores){
+			posicao.add(j.getCarro());
+		}
+	}
+
 	public String simulaCorrida(){
 		List<Carro> ultrapassar = new ArrayList<>();
 		StringBuilder acontecimentos = new StringBuilder();

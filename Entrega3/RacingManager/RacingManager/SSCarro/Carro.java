@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class Carro {
 
-	private String idCarro;
+	private int idCarro;
 	private int voltas;
 	private List<Integer> posicao;
 	private List<Long> tempo;
@@ -24,7 +24,6 @@ public class Carro {
 	private Boolean DNF;
 	private String marca;
 	private String modelo;
-	private String id;
 	private Piloto piloto;
 
 	public Piloto getPiloto() {
@@ -35,11 +34,11 @@ public class Carro {
 		this.piloto = piloto;
 	}
 
-	public String getIdCarro() {
+	public int getIdCarro() {
 		return idCarro;
 	}
 
-	public void setIdCarro(String idCarro) {
+	public void setIdCarro(int idCarro) {
 		this.idCarro = idCarro;
 	}
 
@@ -306,12 +305,12 @@ public class Carro {
 		this.modelo = modelo;
 	}
 
-	public String getId() {
-		return id;
+	public int getId() {
+		return idCarro;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setId(int id) {
+		this.idCarro = id;
 	}
 
 	public void afinaCarro(){
@@ -319,23 +318,29 @@ public class Carro {
 	}
 
 	@Override
-	public String toString() {
+/*	public String toString() {
 		return "Carro{" +
-				"voltas=" + voltas +
-				", posicao=" + posicao +
-				", tempo=" + tempo +
-				", fiabilidade=" + fiabilidade +
+				"fiabilidade=" + fiabilidade +
 				", potencia=" + potencia +
 				", cilindrada=" + cilindrada +
 				", PAC=" + PAC +
 				", pneus='" + pneus + '\'' +
 				", motor='" + motor + '\'' +
 				", downforce=" + downforce +
-				// ", piloto=" + piloto +
+				", piloto=" + piloto +
 				", categoria='" + categoria + '\'' +
 				", DNF=" + DNF +
 				", marca='" + marca + '\'' +
 				", modelo='" + modelo + '\'' +
 				'}';
+	}*/
+
+	public String toString() {
+		return "Carro: " +
+				"potencia=" + potencia +
+				", cilindrada=" + cilindrada +
+				", categoria='" + categoria + '\'' +
+				", marca='" + marca + '\'' +
+				", modelo='" + modelo + '\'';
 	}
 }

@@ -3,7 +3,9 @@ package data;
 import RacingManager.Piloto;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PilotoDAO {
@@ -12,8 +14,8 @@ public class PilotoDAO {
     private PilotoDAO() {
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
              Statement statement = conn.createStatement()) {
-            String sql = "CREATE TABLE pilots " +
-                    "(nomePiloto TEXT PRIMARY KEY, " +
+            String sql = "CREATE TABLE if not exists pilot " +
+                    "(nomePiloto VARCHAR(100) PRIMARY KEY, " +
                     "SVA REAL NOT NULL, " +
                     "CTS REAL NOT NULL)";
             statement.executeUpdate(sql);
@@ -35,7 +37,7 @@ public class PilotoDAO {
         // Add a new pilot to the database
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
             PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO pilots (nomePiloto, SVA, CTS) VALUES (?, ?, ?)");
+                    "INSERT INTO pilot (nomePiloto, SVA, CTS) VALUES (?, ?, ?)");
             statement.setString(1, piloto.getNomePiloto());
             statement.setFloat(2, piloto.getSVA());
             statement.setFloat(3, piloto.getCTS());
@@ -50,7 +52,7 @@ public class PilotoDAO {
         Piloto piloto = null;
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT * FROM pilots WHERE nomePiloto = ?");
+                    "SELECT * FROM pilot WHERE nomePiloto = ?");
             statement.setString(1, nomePiloto);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -69,7 +71,7 @@ public class PilotoDAO {
         // Delete a pilot from the database
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
             PreparedStatement statement = conn.prepareStatement(
-                    "DELETE FROM pilots WHERE nomePiloto = ?");
+                    "DELETE FROM pilot WHERE nomePiloto = ?");
             statement.setString(1, nomePiloto);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -82,7 +84,7 @@ public class PilotoDAO {
         int size = 0;
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM pilots");
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM pilot");
             if (resultSet.next()) {
                 size = resultSet.getInt(1);
             }
@@ -96,7 +98,7 @@ public class PilotoDAO {
         // Update an existing pilot in the database
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
             PreparedStatement statement = conn.prepareStatement(
-                    "UPDATE pilots SET SVA = ?, CTS = ? WHERE nomePiloto = ?");
+                    "UPDATE pilot SET SVA = ?, CTS = ? WHERE nomePiloto = ?");
             statement.setFloat(1, piloto.getSVA());
             statement.setFloat(2, piloto.getCTS());
             statement.setString(3, piloto.getNomePiloto());
@@ -106,23 +108,24 @@ public class PilotoDAO {
         }
     }
 
-    public Map<String, Piloto> getAll() {
-        Map<String, Piloto> pilots = new HashMap<>();
+    public List<Piloto> getAll() {
+        List<Piloto> pilots = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM pilots");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM piloto");
             while (resultSet.next()) {
                 Piloto piloto = new Piloto();
                 piloto.setNomePiloto(resultSet.getString("nomePiloto"));
                 piloto.setSVA(resultSet.getFloat("SVA"));
                 piloto.setCTS(resultSet.getFloat("CTS"));
-                pilots.put(piloto.getNomePiloto(), piloto);
+                pilots.add(piloto);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return pilots;
     }
+
 }
 
 

@@ -33,10 +33,6 @@ public class Piloto {
 
 	@Override
 	public String toString() {
-		return "Piloto{" +
-				"nomePiloto='" + nomePiloto + '\'' +
-				", SVA=" + SVA +
-				", CTS=" + CTS +
-				'}';
+		return "Piloto: nomePiloto: '" + nomePiloto + "', SVA: " + SVA + ", CTS: " + CTS;
 	}
 }

@@ -18,9 +18,6 @@ public class Utilizador {
 		this.ranking = 0;
     }
 
-
-
-
 	// Getters and Setters
 	public String getUsername() {
 		return username;
