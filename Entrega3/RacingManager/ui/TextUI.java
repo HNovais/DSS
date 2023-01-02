@@ -101,12 +101,13 @@ public class TextUI {
     // Ver o que acontece qd apertas 0
     private void showSubMenu() {
         Menu subMenu = new Menu(new String[] {
-                "Play Championship",
+                "Configure Championship",
                 "Race Simulation",
         });
 
         // Set up the handlers for each option in the submenu
         subMenu.setHandler(1, this::showMenuCamp);
+        //subMenu.setHandler(2, this::handleRaceSimulation);
         //subMenu.setHandler(2, this::handleRaceSimulation);
 
         // Run the submenu
@@ -129,7 +130,7 @@ public class TextUI {
         if(campeonato == 0) {
            showSubMenu();
         }
-        Campeonato campSelected = campeonatoDAO.get(campeonatos.get(campeonato));
+        Campeonato campSelected = campeonatoDAO.get(campeonatos.get(campeonato-1));
         clearWindow();
         showMenuCirc(campSelected);
     }
@@ -181,23 +182,25 @@ public class TextUI {
             campeonato.jogadores.add(jogador);
         }
 
-        showSubMenu();
+        handleRaceSimulation(campeonato);
     }
 
     private Carro menuCarro(){
         List<Carro> carros = CarroDAO.getInstance().getAll();
-        List<String> carroString = new ArrayList<>();
         int nCarros = -1;
+
+/*        List<String> carroString = new ArrayList<>();
+
 
         for(Carro c : carros){
             carroString.add(carros.toString());
-        }
+        }*/
 
         //do{
         System.out.println("Select one of the following Cars:");
         for(int i = 0; i < carros.size(); i++) {
             String str = Integer.toString(i+1);
-            System.out.println(str + " - " + carroString.get(i));
+            System.out.println(str + " - " + carros.get(i));
         }
 
         //System.out.println(carroString);
@@ -206,43 +209,38 @@ public class TextUI {
         clearWindow();
         //} while (nCarros <= 0 || nCarros >= carros.size());
 
-        return carros.get(nCarros);
+        return carros.get(nCarros - 1);
     }
 
     private Piloto menuPiloto(){
         List<Piloto> pilotos = PilotoDAO.getInstance().getAll();
-        List<String> pilotoString = new ArrayList<>();
         int nPiloto = -1;
-
-        for(Piloto p : pilotos){
-            pilotoString.add(pilotos.toString());
-        }
 
         System.out.println("Select one of the following Pilots:");
         for(int i = 0; i < pilotos.size(); i++) {
             String str = Integer.toString(i+1);
-            System.out.println(str + " - " + pilotoString.get(i));
+            System.out.println(str + " - " + pilotos.get(i));
         }
         //System.out.println(carroString);
         System.out.print("-> ");
         nPiloto = scin.nextInt();
         clearWindow();
 
-        return pilotos.get(nPiloto);
+        return pilotos.get(nPiloto - 1);
     }
 
-/*
-    private void handleConfigureChampionship(Campeonato campeonato){
+    private void handleRaceSimulation(Campeonato campeonato){
         for(int i = 0; i <= campeonato.circuitos.size(); i++){
             Corrida nextCorrida = campeonato.nextCorrida(i);
             nextCorrida.addParticipantes(campeonato.getJogadores());
 
             System.out.println("---------- Circuito: " + nextCorrida.getCircuito().getNomeCircuito() + " ----------");
             System.out.println("\n\n\n---------- Meteorologia: " + nextCorrida.getMeteorologia() + " ----------");
+
             // FAZER ALTERACOES AO CARRO
             nextCorrida.simulaCorrida();
         }
-    }*/
+    }
 
 
     /*
