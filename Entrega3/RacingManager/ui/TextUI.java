@@ -18,14 +18,14 @@ public class TextUI {
     CampeonatoDAO campeonatoDAO = CampeonatoDAO.getInstance();
 
     public static void clearWindow() {
-        for (int i = 0;i<75;i++){
+        for (int i = 0; i < 75; i++) {
             System.out.println();
         }
     }
 
     public TextUI() {
         // Criar o menu
-        this.menu = new Menu("Sign in / Sign up", new String[]{
+        this.menu = new Menu("Welcome", new String[]{
                 "Register",
                 "Login",
         });
@@ -55,13 +55,12 @@ public class TextUI {
 
         // Use the UtilizadorDAO to add the new user to the database
         UtilizadorDAO utilizadorDAO = UtilizadorDAO.getInstance();
-        if(utilizadorDAO.get(username) == null) {
+        if (utilizadorDAO.get(username) == null) {
             utilizadorDAO.put(utilizador);
             System.out.println("Successfully registered!");
             // Show the submenu
             showSubMenu();
-        }
-        else {
+        } else {
             System.out.println("Name in use! Try again!");
             // Return to the main menu
             this.menu.run();
@@ -100,7 +99,7 @@ public class TextUI {
 
     // Ver o que acontece qd apertas 0
     private void showSubMenu() {
-        Menu subMenu = new Menu(new String[] {
+        Menu subMenu = new Menu(new String[]{
                 "Configure Championship",
                 "Race Simulation",
         });
@@ -114,66 +113,64 @@ public class TextUI {
         subMenu.run();
     }
 
-    private void showMenuCamp(){
+    private void showMenuCamp() {
         List<String> campeonatos = campeonatoDAO.getCampsName();
         int campSize = campeonatos.size();
         clearWindow();
         System.out.println("Select one of the following Championships:");
-        for(int i = 0; i < campSize; i++) {
-            String str = Integer.toString(i+1);
+        for (int i = 0; i < campSize; i++) {
+            String str = Integer.toString(i + 1);
             System.out.println(str + " - " + campeonatos.get(i));
         }
         System.out.println("0 - Exit");
         System.out.print("-> ");
         int campeonato = scin.nextInt();
 
-        if(campeonato == 0) {
-           showSubMenu();
+        if (campeonato == 0) {
+            showSubMenu();
         }
-        Campeonato campSelected = campeonatoDAO.get(campeonatos.get(campeonato-1));
+        Campeonato campSelected = campeonatoDAO.get(campeonatos.get(campeonato - 1));
         clearWindow();
         showMenuCirc(campSelected);
     }
 
-    private void showMenuCirc(Campeonato campeonato){
+    private void showMenuCirc(Campeonato campeonato) {
         List<Circuito> circuitos = campeonatoDAO.getCircuitosCampeonato(campeonato);
 
         List<String> circuitosNome = new ArrayList<>();
-        for(Circuito c : circuitos) {
+        for (Circuito c : circuitos) {
             circuitosNome.add(c.getNomeCircuito());
         }
         int circuitSize = circuitosNome.size();
 
         System.out.println("Circuits in " + campeonato.getNome() + ":");
-        for(int i = 0; i < circuitSize; i++) {
-            System.out.println(circuitosNome.get(i));
+        for (int i = 0; i < circuitSize; i++) {
+            System.out.println(" -> " + circuitosNome.get(i));
         }
         System.out.println("Press 0 to go back and 1 to move on!");
         System.out.print("-> ");
         int circuito = scin.nextInt();
 
-        if(circuito == 0) {
+        if (circuito == 0) {
             showMenuCamp();
-        }
-        else if(circuito == 1){
+        } else if (circuito == 1) {
             clearWindow();
             campeonato.setCircuitos(circuitos);
             handlePlayChampionship(campeonato);
-        }
-        else System.exit(0);
+        } else System.exit(0);
     }
 
     private void handlePlayChampionship(Campeonato campeonato) {
         int nJogadores = -1;
-        List<Jogador> jogadores = new ArrayList<>();
+        //List<Jogador> jogadores = new ArrayList<>();
 
-        do{
+        do {
             System.out.println("How many players will play (Max: " + MAX + "): ");
             nJogadores = scin.nextInt();
             clearWindow();
         } while (nJogadores <= 1 || nJogadores >= 7);
 
-        for(int i = 1; i <= nJogadores; i++){
+        for (int i = 1; i <= nJogadores; i++) {
             Jogador jogador = new Jogador();
             System.out.println("Player " + i);
             //jogador.setId(scin.nextLine());
@@ -185,7 +182,7 @@ public class TextUI {
         handleRaceSimulation(campeonato);
     }
 
-    private Carro menuCarro(){
+    private Carro menuCarro() {
         List<Carro> carros = CarroDAO.getInstance().getAll();
         int nCarros = -1;
 
@@ -198,8 +195,8 @@ public class TextUI {
 
         //do{
         System.out.println("Select one of the following Cars:");
-        for(int i = 0; i < carros.size(); i++) {
-            String str = Integer.toString(i+1);
+        for (int i = 0; i < carros.size(); i++) {
+            String str = Integer.toString(i + 1);
             System.out.println(str + " - " + carros.get(i));
         }
 
@@ -212,13 +209,13 @@ public class TextUI {
         return carros.get(nCarros - 1);
     }
 
-    private Piloto menuPiloto(){
+    private Piloto menuPiloto() {
         List<Piloto> pilotos = PilotoDAO.getInstance().getAll();
         int nPiloto = -1;
 
         System.out.println("Select one of the following Pilots:");
-        for(int i = 0; i < pilotos.size(); i++) {
-            String str = Integer.toString(i+1);
+        for (int i = 0; i < pilotos.size(); i++) {
+            String str = Integer.toString(i + 1);
             System.out.println(str + " - " + pilotos.get(i));
         }
         //System.out.println(carroString);
@@ -229,22 +226,94 @@ public class TextUI {
         return pilotos.get(nPiloto - 1);
     }
 
-    private void handleRaceSimulation(Campeonato campeonato){
-        for(int i = 0; i <= campeonato.circuitos.size(); i++){
+    private void handleRaceSimulation(Campeonato campeonato) {
+        for (int i = 0; i < campeonato.circuitos.size(); i++) {
             Corrida nextCorrida = campeonato.nextCorrida(i);
+            Circuito cAtual = campeonato.getCircuitos().get(i);
+            nextCorrida.setCircuito(cAtual);
             nextCorrida.addParticipantes(campeonato.getJogadores());
+            List<Jogador> jogadoresLista = new ArrayList<>(campeonato.jogadores);
 
-            System.out.println("---------- Circuito: " + nextCorrida.getCircuito().getNomeCircuito() + " ----------");
-            System.out.println("\n\n\n---------- Meteorologia: " + nextCorrida.getMeteorologia() + " ----------");
+            System.out.println("\tCorrida " + (i + 1));
+            System.out.println("** Circuito **");
+            System.out.println("-> " + nextCorrida.getCircuito().getNomeCircuito());
+            System.out.println("** Meteorologia **");
+            System.out.println("-> " + nextCorrida.getMeteorologia());
 
-            // FAZER ALTERACOES AO CARRO
+            Campeonato campeonatoPneus = selectTires(campeonato);
+
+            Campeonato campeonatoAtual = selectEngineMode(campeonatoPneus);
+
+/*
+            //System.out.println("Number of Possible Tunings: " + campeonato.totalAfinacoes());
+            for (int j = 0; j < campeonato.getJogadores().size(); j++) {
+                // totalAfinacoes dá zero
+                System.out.println("Number of Possible Tunings: " + campeonato.totalAfinacoes());
+                System.out.println("Do you want to tune the car? (yes/no)");
+                String afinacoes = scin.nextLine();
+                if (afinacoes.equals("yes")) {
+                    System.out.println("Do you want to change downforce? (yes/no)");
+                } else if (afinacoes.equals("no")) {
+                    continue;
+                }// else System.exit(99);
+            }
+*/
+
+            for (int j = 0; j < campeonato.getJogadores().size(); j++) {
+                System.out.println("Select your Tires: (macio/duro/chuva)");
+                String pneus = scin.nextLine();
+                if ((pneus.toLowerCase().equals("macio")) || (pneus.toLowerCase().equals("duro")) || (pneus.toLowerCase().equals("chuva"))) {
+                    campeonato.escolhePneus(jogadoresLista.get(i).getId(), pneus);
+                } else System.exit(0);
+
+                System.out.println("Select your Engine Mode: (conservador/normal/agressivo)");
+                String motor = scin.nextLine();
+                if ((pneus.toLowerCase().equals("conservador")) || (pneus.toLowerCase().equals("normal")) || (pneus.toLowerCase().equals("agressivo"))) {
+                    campeonato.escolheMotor(jogadoresLista.get(i).getId(), motor);
+                } else System.exit(0);
+            }
             nextCorrida.simulaCorrida();
         }
+        System.out.println("Chego aqui");
     }
+
+    private Campeonato selectTires(Campeonato campeonato) {
+        for (int j = 0; j < campeonato.getJogadores().size(); j++) {
+            // totalAfinacoes dá zero
+            System.out.println("Number of Possible Tunings: " + campeonato.totalAfinacoes());
+            System.out.println("Do you want to tune the car? (yes/no)");
+            String afinacoes = scin.nextLine();
+            if (afinacoes.equals("yes")) {
+                System.out.println("Do you want to change downforce? (yes/no)");
+                String downforce = scin.nextLine();
+            } else if (afinacoes.equals("no")) {
+                continue;
+            }// else System.exit(99);
+        }
+        return campeonato;
+    }
+
+    private Campeonato selectEngineMode(Campeonato campeonato) {
+        List<Piloto> pilotos = PilotoDAO.getInstance().getAll();
+        int nPiloto = -1;
+
+        System.out.println("Select one of the following Pilots:");
+        for (int i = 0; i < pilotos.size(); i++) {
+            String str = Integer.toString(i + 1);
+            System.out.println(str + " - " + pilotos.get(i));
+        }
+        //System.out.println(carroString);
+        System.out.print("-> ");
+        nPiloto = scin.nextInt();
+        clearWindow();
+
+        return campeonato;
+    }
+}
+
 
 
     /*
-
      private void handlePlayChampionship() {
         // Configurar Campeonatos
 
@@ -355,8 +424,6 @@ public class TextUI {
     }
 
      */
-
-}
 
 
 

@@ -26,6 +26,7 @@ public class Circuito {
 		return nomeCircuito;
 	}
 
+
 	public void setNomeCircuito(String nomeCircuito) {
 		this.nomeCircuito = nomeCircuito;
 	}

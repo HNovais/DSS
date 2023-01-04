@@ -22,6 +22,10 @@ public class Campeonato {
 	private CorridaFacade corrF;
 	// CorridaDAO corrDAO;
 
+	public List<Circuito> getCircuitos() {
+		return circuitos;
+	}
+
 	public void setCircuitos(List<Circuito> circuitos){ this.circuitos = circuitos; }
 
 	public String getNome() {
