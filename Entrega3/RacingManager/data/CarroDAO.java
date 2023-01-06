@@ -54,7 +54,6 @@ public class CarroDAO {
                     "motor TEXT NOT NULL, " +
                     "downforce FLOAT NOT NULL, " +
                     "categoria TEXT NOT NULL, " +
-                    "DNF BOOLEAN NOT NULL, " +
                     "marca TEXT NOT NULL, " +
                     "modelo TEXT NOT NULL)";
             statement.executeUpdate(sql);
@@ -140,7 +139,7 @@ public class CarroDAO {
                 carro.setMotor(resultSet.getString("motor"));
                 carro.setDownforce(resultSet.getFloat("downforce"));
                 carro.setCategoria(resultSet.getString("categoria"));
-                carro.setDNF(resultSet.getBoolean("DNF"));
+                carro.setDNF(false);
                 carro.setMarca(resultSet.getString("marca"));
                 carro.setModelo(resultSet.getString("modelo"));
                 carro.setId(resultSet.getInt("idCarro"));
@@ -206,21 +205,29 @@ public class CarroDAO {
         List<Carro> carros = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            String sql = "SELECT idCarro, potencia, marca, modelo, categoria FROM carro";
+            String sql = "SELECT * FROM carro";
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
+                /*
                 int idCarro = resultSet.getInt("idCarro");
                 int potencia = resultSet.getInt("potencia");
                 String marca = resultSet.getString("marca");
                 String modelo = resultSet.getString("modelo");
                 String categoria = resultSet.getString("categoria");
-
+                */
                 Carro carro = new Carro();
-                carro.setIdCarro(idCarro);
-                carro.setPotencia(potencia);
-                carro.setMarca(marca);
-                carro.setModelo(modelo);
-                carro.setCategoria(categoria);
+                carro.setId(resultSet.getInt("idCarro"));
+                carro.setFiabilidade(resultSet.getInt("fiabilidade"));
+                carro.setPotencia(resultSet.getInt("potencia"));
+                carro.setCilindrada(resultSet.getInt("cilindrada"));
+                carro.setPAC(resultSet.getFloat("PAC"));
+                carro.setPneus(resultSet.getString("pneus"));
+                carro.setMotor(resultSet.getString("motor"));
+                carro.setDownforce(resultSet.getFloat("downforce"));
+                carro.setCategoria(resultSet.getString("categoria"));
+                carro.setDNF(false);
+                carro.setMarca(resultSet.getString("marca"));
+                carro.setModelo(resultSet.getString("modelo"));
                 carros.add(carro);
             }
         } catch (SQLException e) {

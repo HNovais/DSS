@@ -61,16 +61,16 @@ public class Carro {
 		float c = calculaMeteorologia(meteorologia);
 
 		if(Objects.equals(gdu, "Reta"))
-			e = 0.25F;
+			e = 0F;
 		else if(Objects.equals(gdu, "Curva"))
-			e = 0.5F;
+			e = 0.125F;
 		else
-			e = 0.75F;
+			e = 0.25F;
 
 		if(Objects.equals(meteorologia, "Seco"))
 			cts = 1 - cts;
 
-		float value = (e + v + c + cts + (4 * randomFloat())) / 8;
+		float value = (e + (v/2.3F) + c + (cts/4) + (3 * randomFloat())) / 8;
 
 		if (value >= 0.5)
 			response = true;
@@ -83,24 +83,24 @@ public class Carro {
 		float m = 0;
 
 		if (Objects.equals(meteorologia, "Chuva") && (Objects.equals(pneus, "Macio") || Objects.equals(pneus, "Duro")))
-			p = 1;
+			p = 0.75F;
 		else if(Objects.equals(meteorologia, "Chuva"))
 			p = 0;
 		else{
 			if (Objects.equals(pneus, "Macio"))
-				p = 0.75F;
-			else
 				p = 0.25F;
+			else
+				p = 0F;
 		}
 
 		if (Objects.equals(motor, "Conservador"))
-			p = 0.25F;
+			p = 0F;
 		else if (Objects.equals(motor, "Normal"))
-			p = 0.5F;
+			p = 0.25F;
 		else
-			p = 0.75F;
+			p = 0.5F;
 
-		return (p + m + (1 - PAC) + (1 - downforce));
+		return ((p + m + (1 - PAC) + (1 - downforce))/4);
 	}
 	public boolean calculaOverall(Carro frente) {
 		boolean response = false;
@@ -180,9 +180,9 @@ public class Carro {
 		return sum;
 	}
 	private float randomFloat(){
-		Random rng = new Random();  // create a new random number generator
+		double randomDouble = Math.random();  // create a new random number generator
 
-		return rng.nextFloat();
+		return (float) randomDouble;
 	}
 
 	public int getVoltas() {
