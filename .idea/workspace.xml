@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9707515b-6482-4d64-b7c1-4d5b225eabdb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/RacingManager/Circuito.java" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/RacingManager/Circuito.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/RacingManager/SSCampeonato/Campeonato.java" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/RacingManager/SSCampeonato/Campeonato.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/RacingManager/Circuito.class" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/RacingManager/Circuito.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/RacingManager/SSCampeonato/Campeonato.class" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/RacingManager/SSCampeonato/Campeonato.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/ui/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/ui/Menu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/ui/TextUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/ui/TextUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/ui/TextUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/ui/TextUI.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2Je6qE4hvc7bq9NYLxbcpCIEnmE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Entrega3/RacingManager" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9707515b-6482-4d64-b7c1-4d5b225eabdb" name="Changes" comment="" />
+      <created>1672426390532</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1672426390532</updated>
+    </task>
+    <servers />
+  </component>
+</project>

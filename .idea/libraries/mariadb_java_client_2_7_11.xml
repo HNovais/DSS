@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mariadb-java-client-2.7.11">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Entrega3/RacingManager/lib/mariadb-java-client-2.7.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
