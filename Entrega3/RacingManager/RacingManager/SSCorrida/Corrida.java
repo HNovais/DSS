@@ -52,8 +52,18 @@ public class Corrida {
 		Map<Integer, List<String>> acontecimentos = new HashMap<>();
 
 		posicaoInicial();
+		posicaoInicial();
 
-		for (int i = 1; i <= voltas; i++){
+		Scanner scanner = new Scanner(System.in);
+
+		int i = 1;
+		while (i <= voltas) {
+			System.out.println("Press Enter to simulate the next lap, or enter 'q' to quit: ");
+			String input = scanner.nextLine();
+			if (input.equals("q")) {
+				break;
+			}
+
 			List<Elemento> elementos = circuito.getElementos();
 			List<String> acontecimento = new ArrayList<>();
 			int x = 0;
@@ -99,6 +109,8 @@ public class Corrida {
 			acontecimentos.put(i, acontecimento);
 			printResumo(i, acontecimentos.get(i));
 			acontecimento.clear();
+
+			i++;
 		}
 		clearDNF();
 

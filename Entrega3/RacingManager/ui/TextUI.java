@@ -295,32 +295,34 @@ public class TextUI {
 
             for (int j = 0; j < campeonato.getJogadores().size(); j++) {
                 String resposta;
-                System.out.println("Player " + jogadoresLista.get(j).getNomeJogador());
-                System.out.println("Do you want to Tune your car for this Race? (yes/no)");
-                System.out.print("Option: ");
-                while (true) {
-                    resposta = scin.nextLine();
-                    if (resposta.equalsIgnoreCase("yes")) {
-                        System.out.println("Current Downforce: " + jogadoresLista.get(j).getAfinacoes());
-                        System.out.println("New Downforce: (between 0 and 1)");
-                        float downforce = 0.0f;
-                        while (true) {
-                            try {
-                                downforce = Float.parseFloat(scin.nextLine());
-                                break;
-                            } catch (NumberFormatException e) {
-                                System.out.println("Invalid input. Please try again.");
+                if (jogadoresLista.get(j).getCarro().getCategoria().equalsIgnoreCase("C1") || jogadoresLista.get(j).getCarro().getCategoria().equalsIgnoreCase("C2")) {
+                    System.out.println("Player " + jogadoresLista.get(j).getNomeJogador());
+                    System.out.println("Do you want to Tune your car for this Race? (yes/no)");
+                    System.out.print("Option: ");
+                    while (true) {
+                        resposta = scin.nextLine();
+                        if (resposta.equalsIgnoreCase("yes")) {
+                            System.out.println("Current Downforce: " + jogadoresLista.get(j).getAfinacoes());
+                            System.out.println("New Downforce: (between 0 and 1)");
+                            float downforce = 0.0f;
+                            while (true) {
+                                try {
+                                    downforce = Float.parseFloat(scin.nextLine());
+                                    break;
+                                } catch (NumberFormatException e) {
+                                    System.out.println("Invalid input. Please try again.");
+                                }
                             }
+                            campeonato.alteraDownforce(jogadoresLista.get(j).getNomeJogador(), downforce);
+                            // System.out.println(jogadoresLista.get(j).carro.getDownforce());
+                            break;
+                        } else if (resposta.equalsIgnoreCase("no")) {
+                            break;
+                        } else if ((!resposta.equalsIgnoreCase("yes")) && (!resposta.equalsIgnoreCase("no")) && (!resposta.isEmpty())) {
+                            System.out.println("Invalid input. Please try again.");
+                            System.out.println("Do you want to Tune your car for this Race? (yes/no)");
+                            System.out.print("Option: ");
                         }
-                        campeonato.alteraDownforce(jogadoresLista.get(j).getNomeJogador(), downforce);
-                        // System.out.println(jogadoresLista.get(j).carro.getDownforce());
-                        break;
-                    } else if (resposta.equalsIgnoreCase("no")) {
-                        break;
-                    } else if ((!resposta.equalsIgnoreCase("yes")) && (!resposta.equalsIgnoreCase("no")) && (!resposta.isEmpty())){
-                        System.out.println("Invalid input. Please try again.");
-                        System.out.println("Do you want to Tune your car for this Race? (yes/no)");
-                        System.out.print("Option: ");
                     }
                 }
             }
