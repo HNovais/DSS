@@ -126,7 +126,7 @@ public class RacingManagerFacade implements IRacingManager {
 	 * 
 	 * @param idCamp
 	 */
-	public String simularCorrida(String idCamp) {
+	public String simulaCorrida(String idCamp) {
 		return campF.simulaCorrida(idCamp);
 	}
 
@@ -139,4 +139,43 @@ public class RacingManagerFacade implements IRacingManager {
 		return campF.verificaAfinacoes(idCamp, idJ);
 	}
 
+	public CircuitoDAO getCircuitos() {
+		return circuitos;
+	}
+
+	public void setCircuitos(CircuitoDAO circuitos) {
+		this.circuitos = circuitos;
+	}
+
+	public UtilizadorDAO getUtilizadores() {
+		return utilizadores;
+	}
+
+	public void setUtilizadores(UtilizadorDAO utilizadores) {
+		this.utilizadores = utilizadores;
+	}
+
+	public PilotoDAO getPilotos() {
+		return pilotos;
+	}
+
+	public void setPilotos(PilotoDAO pilotos) {
+		this.pilotos = pilotos;
+	}
+
+	public CampeonatoFacade getCampF() {
+		return campF;
+	}
+
+	public void setCampF(CampeonatoFacade campF) {
+		this.campF = campF;
+	}
+
+	public CarroFacade getCarroF() {
+		return carroF;
+	}
+
+	public void setCarroF(CarroFacade carroF) {
+		this.carroF = carroF;
+	}
 }

@@ -71,6 +71,13 @@ public class CarroFacade implements ICarro {
 		return this.carros.get(idCarro);
 	}
 
+	public CarroDAO getCarros() {
+		return carros;
+	}
+
+	public void setCarros(CarroDAO carros) {
+		this.carros = carros;
+	}
 
 	/**
 	 * 

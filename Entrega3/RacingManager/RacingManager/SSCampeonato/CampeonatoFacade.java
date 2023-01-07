@@ -13,6 +13,24 @@ public class CampeonatoFacade implements ICampeonato {
 	private List<String> nomeJogadores;
 	private int numeroJogadores;
 
+	private Campeonato CampeonatoAtual;
+
+	public Campeonato getCampeonatoAtual() {
+		return CampeonatoAtual;
+	}
+
+	public void setCampeonatoAtual(Campeonato campeonatoAtual) {
+		CampeonatoAtual = campeonatoAtual;
+	}
+
+	public CampeonatoDAO getCampeonatos() {
+		return campeonatos;
+	}
+
+	public void setCampeonatos(CampeonatoDAO campeonatos) {
+		this.campeonatos = campeonatos;
+	}
+
 	/**
 	 * 
 	 * @param n

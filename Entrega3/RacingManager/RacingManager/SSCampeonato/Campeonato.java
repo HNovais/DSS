@@ -3,6 +3,7 @@ package RacingManager.SSCampeonato;
 import RacingManager.SSCarro.Carro;
 import RacingManager.SSCorrida.*;
 import RacingManager.*;
+import com.sun.jdi.IntegerType;
 
 import java.util.*;
 
@@ -14,9 +15,9 @@ public class Campeonato {
 	private List<Corrida> corridas = new ArrayList<>();
 	public List<Circuito> circuitos = new ArrayList<>();
 	public Set<Jogador> jogadores = new HashSet<>();
-	private Map<String, List<Integer>> classificacao;
+	public Map<String, List<Integer>> classificacao = new HashMap<>();
 	private int contador = 0;
-	private Map<String, List<Integer>> pontuacao;
+	public Map<String, List<Integer>> pontuacao = new HashMap<>();
 	// private Map<String, List<String>> pontCategoria;
 	private CorridaFacade corrF;
 	// CorridaDAO corrDAO;
@@ -146,6 +147,7 @@ public class Campeonato {
 		for(String jog : listaJogadores){
 			Jogador jogador = new Jogador(jog);
 			jogadores.add(jogador);
+
 		}
 	}
 
@@ -188,12 +190,79 @@ public class Campeonato {
 		j.alteraDownforce(val);
 	}
 
-	public String simulaCorrida(){
-		Corrida corr = indicaCorrida();
-		// modo do jogo --> Normal ou Premium
+	public String simulaCorrida(){/*
+		Corrida nextCorrida = campeonato.nextCorrida(i);
+		Circuito cAtual = campeonato.getCircuitos().get(i);
+		nextCorrida.setCircuito(cAtual);
+		nextCorrida.addParticipantes(campeonato.getJogadores());
+	*/	Corrida corr = indicaCorrida();
+		// modo do jogo --> Normal ou Premium\
 		String updates = corr.simulaCorrida();
-		//Faz Updates
+		this.contador = contador + 1;
+
+		updateClassificacao(updates);
+		updatePontuacao();
+
 		return updates;
+	}
+
+	public void printFinal(){
+		System.out.println("------Classificação Geral------");
+		Map<String, Integer> c = getPontuacao();
+
+		List<Map.Entry<String, Integer>> entries = new ArrayList<>(c.entrySet());
+		Collections.sort(entries, (a, b) -> b.getValue() - a.getValue());
+
+		int x = 1;
+
+		for (Map.Entry<String, Integer> entry : entries) {
+			String key = entry.getKey();
+			int value = entry.getValue();
+			System.out.println("1º: " + key + " ---> " + value);
+			x++;
+		}
+	}
+
+	private Map<String, Integer> getPontuacao(){
+		Map<String, Integer> c = new HashMap<>();
+
+		for(String jogador : pontuacao.keySet()){
+			List<Integer> valores = pontuacao.get(jogador);
+			int sum = valores.stream().mapToInt(Integer::intValue).sum();
+			c.put(jogador, sum);
+		}
+
+		return c;
+	}
+	private void updatePontuacao(){
+		for(String jogador : pontuacao.keySet()){
+			List<Integer> AAA = classificacao.get(jogador);
+			int x = AAA.get(AAA.size() - 1);
+
+			List<Integer> pont = pontuacao.get(jogador);
+			if (pont == null)
+				pont = new ArrayList<>();
+
+			pont.add((7-x)*2);
+
+			pontuacao.put(jogador, pont);
+		}
+	}
+	private void updateClassificacao(String updates){
+		for(int i = 1; i <= jogadores.size(); i++){
+			String[] p = updates.split("\n");
+			String values = p[i-1];
+			String[] pp = values.split("--->");
+			String jogador = pp[1].trim();
+
+			List<Integer> list = classificacao.get(jogador);
+			if (list == null)
+				list = new ArrayList<>();
+
+			list.add(i);
+
+			classificacao.put(jogador, list);
+		}
 	}
 	public int getContador() {
 		return contador;

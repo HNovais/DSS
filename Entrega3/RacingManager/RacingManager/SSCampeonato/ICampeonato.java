@@ -3,11 +3,16 @@ package RacingManager.SSCampeonato;
 import RacingManager.Piloto;
 import RacingManager.SSCarro.Carro;
 import RacingManager.SSCorrida.Corrida;
+import data.CampeonatoDAO;
 
 import java.util.List;
 
 public interface ICampeonato {
 
+	public CampeonatoDAO getCampeonatos();
+	public void setCampeonatos(CampeonatoDAO campeonatos);
+	public Campeonato getCampeonatoAtual();
+	public void setCampeonatoAtual(Campeonato campeonatoAtual);
 	/**
 	 * 
 	 * @param n
