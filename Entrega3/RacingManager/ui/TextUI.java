@@ -97,7 +97,6 @@ public class TextUI {
         }
     }
 
-    // Ver o que acontece qd apertas 0
     private void showSubMenu() {
         Menu subMenu = new Menu(new String[]{
                 "Configure Championship",
@@ -199,9 +198,7 @@ public class TextUI {
 
         for (int i = 1; i <= nJogadores; i++) {
             Jogador j = new Jogador();
-            // Jogador j = menuNomeJog();
-            // System.out.println("Player " + j.getNomeJogador());
-            //jogador.setId(scin.nextLine());
+            j.setNomeJogador(menuNome());
             j.setCarro(menuCarro());
             j.getCarro().setPiloto(menuPiloto());
             campeonato.jogadores.add(j);
@@ -210,13 +207,16 @@ public class TextUI {
         handleRaceSimulation(campeonato);
     }
 
-    private Jogador menuNomeJog() {
-        Jogador jogador = new Jogador();
-        System.out.println("What is the name of the Player?");
-        System.out.print("Name: ");
-        String nomeJogador = scin.nextLine();
-        jogador.setNomeJogador(nomeJogador);
-        return jogador;
+    private String menuNome() {
+        while (true) {
+            System.out.println("What is the name of the Player?");
+            System.out.print("Name: ");
+            String nomeJogador = scin.nextLine();
+            if (!nomeJogador.isEmpty()) {
+                return nomeJogador;
+            }
+            System.out.println("Invalid input. Please try again.");
+        }
     }
 
     private Carro menuCarro() {
@@ -297,7 +297,7 @@ public class TextUI {
                         System.out.println("Current Downforce: " + jogadoresLista.get(j).getAfinacoes());
                         System.out.println("New Downforce: (between 0 and 1)");
                         Float downforce = scin.nextFloat();
-                        campeonato.alteraDownforce(jogadoresLista.get(j).getId(), downforce);
+                        campeonato.alteraDownforce(jogadoresLista.get(j).getNomeJogador(), downforce);
                     } else if (resposta.equalsIgnoreCase("no")) {
                         break;
                     } else {
@@ -316,13 +316,13 @@ public class TextUI {
                     pneus = scin.nextLine();
                     if ((pneus.equalsIgnoreCase("macio")) || (pneus.equalsIgnoreCase("duro")) || (pneus.equalsIgnoreCase("chuva"))) {
                         // i ou i-1 ??
-                        campeonato.escolhePneus(jogadoresLista.get(j).getId(), pneus);
+                        campeonato.escolhePneus(jogadoresLista.get(j).getNomeJogador(), pneus);
                         System.out.println("Select your Engine Mode: (conservador/normal/agressivo)");
                         System.out.print("Option: ");
                         motor = scin.nextLine();
                         if ((motor.equalsIgnoreCase("conservador")) || (motor.equalsIgnoreCase("normal")) || (motor.equalsIgnoreCase("agressivo"))) {
                             // i ou i-1 ??
-                            campeonato.escolheMotor(jogadoresLista.get(j).getId(), motor);
+                            campeonato.escolheMotor(jogadoresLista.get(j).getNomeJogador(), motor);
                             System.out.println(jogadoresLista.get(j).getCarro().getMotor());
                             System.out.println(jogadoresLista.get(j).getCarro().getPneus());
                             // System.out.println(jogadoresLista.get(j).getId());

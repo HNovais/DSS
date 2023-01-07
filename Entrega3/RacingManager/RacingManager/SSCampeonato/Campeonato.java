@@ -81,7 +81,7 @@ public class Campeonato {
 	public void escolheCarro(String idJ, Carro ca) {
 
 		Jogador j = jogadores.stream()
-					.filter(jog -> jog.getId() == idJ)
+					.filter(jog -> jog.getNomeJogador().equalsIgnoreCase(idJ))
 					.findFirst()
 					.orElse(null);
 		j.escolheCarro(ca);
@@ -94,7 +94,7 @@ public class Campeonato {
 	 */
 	public void escolheMotor(String idJ, String m) {
 		Jogador j = jogadores.stream()
-					.filter(jog -> jog.getId() == idJ)
+					.filter(jog -> jog.getNomeJogador().equalsIgnoreCase(idJ))
 					.findFirst()
 					.orElse(null);
 		j.escolheMotor(m);
@@ -107,7 +107,7 @@ public class Campeonato {
 	 */
 	public void escolhePneus(String idJ, String p) {
 		Jogador j = jogadores.stream()
-					.filter(jog -> jog.getId() == idJ)
+					.filter(jog -> jog.getNomeJogador().equalsIgnoreCase(idJ))
 					.findFirst()
 					.orElse(null);
 		j.escolhePneus(p);
@@ -121,7 +121,7 @@ public class Campeonato {
 
 		int a = totalAfinacoes();
 		Jogador j = jogadores.stream()
-					.filter(jog -> jog.getId() == idJ)
+					.filter(jog -> jog.getNomeJogador().equalsIgnoreCase(idJ))
 					.findFirst()
 					.orElse(null);
 
@@ -157,7 +157,7 @@ public class Campeonato {
 	public boolean verificaAfinacoes(String idJ) {
 		int a = totalAfinacoes();
 		Jogador j = jogadores.stream()
-					.filter(jog -> jog.getId() == idJ)
+					.filter(jog -> jog.getNomeJogador().equalsIgnoreCase(idJ))
 					.findFirst()
 					.orElse(null);
 		return j.verificaAfinacoes(a);
@@ -174,7 +174,7 @@ public class Campeonato {
 	 */
 	public void escolhePiloto(String idJ, Piloto p) {
 		Jogador j = jogadores.stream()
-					.filter(jog -> jog.getId() == idJ)
+					.filter(jog -> jog.getNomeJogador().equalsIgnoreCase(idJ))
 					.findFirst()
 					.orElse(null);
 
@@ -183,7 +183,7 @@ public class Campeonato {
 
 	public void alteraDownforce(String idJ, float val){
 		Jogador j = jogadores.stream()
-					.filter(jog -> jog.getId() == idJ)
+					.filter(jog -> jog.getNomeJogador().equalsIgnoreCase(idJ))
 					.findFirst()
 					.orElse(null);
 		j.alteraDownforce(val);
@@ -202,7 +202,7 @@ public class Campeonato {
 
 	public void afinaCarro(String idJ) {
 		Jogador j = jogadores.stream()
-				.filter(jog -> jog.getId() == idJ)
+				.filter(jog -> jog.getNomeJogador().equalsIgnoreCase(idJ))
 				.findFirst()
 				.orElse(null);
 		j.afinaCarro();

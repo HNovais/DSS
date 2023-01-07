@@ -6,14 +6,30 @@ import java.util.Random;
 public class Jogador {
 
 	private String nomeJogador;
-	private String id;
+	private int id;
 	public Carro carro;
 	private Piloto piloto;
 	private int afinacoes;
 
+	public Jogador(String nome) {
+		this.nomeJogador = nome;
+		this.id = 0;
+		this.carro = null;
+		this.piloto = null;
+		this.afinacoes = 0;
+	}
+
+	public Jogador(String nomeJogador2, int id2) {
+		this.nomeJogador = nomeJogador2;
+		this.id = id2;
+		this.carro = null;
+		this.piloto = null;
+		this.afinacoes = 0;
+	}
+
 	public Jogador() {
 		this.nomeJogador = "";
-		this.id = "";
+		this.id = -1;
 		this.carro = null;
 		this.piloto = null;
 		this.afinacoes = 0;
@@ -106,15 +122,11 @@ public class Jogador {
 		carro.setDownforce(val);
 	}
 
-	public Jogador(String id) {
-		this.id = id;
-	}
-
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -124,5 +136,14 @@ public class Jogador {
 
 	public void setPiloto(Piloto piloto) {
 		this.piloto = piloto;
+	}
+
+	@Override
+	public String toString() {
+		return "Jogador{" +
+				"nomeJogador='" + nomeJogador + '\'' +
+				", id=" + id +
+				", afinacoes=" + afinacoes +
+				'}';
 	}
 }
