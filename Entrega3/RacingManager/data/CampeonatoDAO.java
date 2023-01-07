@@ -135,8 +135,7 @@ public class CampeonatoDAO {
         }
         return campeonatos;
     }
-
-    private List<Corrida> parseList(String str) {
+/*    private List<Corrida> parseList(String str) {
         // Parse a list of Corrida objects from a comma-separated string
         List<Corrida> corridas = new ArrayList<>();
         String[] values = str.split(",");
@@ -145,7 +144,7 @@ public class CampeonatoDAO {
         }
         return corridas;
     }
-
+*/
     public List<Circuito> getCircuitosCampeonato(Campeonato campeonato){
         List<Circuito> circuitos = new ArrayList<>();
         CircuitoDAO circuitoDAO = CircuitoDAO.getInstance();

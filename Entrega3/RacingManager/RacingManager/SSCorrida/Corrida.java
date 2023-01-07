@@ -3,27 +3,18 @@ package RacingManager.SSCorrida;
 import RacingManager.SSCarro.*;
 import RacingManager.*;
 
+import java.sql.Array;
 import java.util.*;
 
 public class Corrida {
 
 	private int id;
 	private int voltas;
-	private List<Carro> posicao = new ArrayList<>();
+	private List<Jogador> posicao = new ArrayList<>();
 	private Map<String, List<Long>> tempo = new HashMap<>();
 	private String meteorologia;
 	private Circuito circuito;
-	private Map<String, List<Carro>> posCategoria = new HashMap<>();
-
-	public Corrida(int id, Circuito circuito){
-		this.id = 0;
-		this.voltas = 5;
-		this.posicao = new ArrayList<>();
-		this.tempo = new HashMap<>();
-		this.meteorologia = "Seco";
-		this.circuito = circuito;
-		this.posCategoria = new HashMap<>();
-	}
+	private Map<String, List<Jogador>> posCategoria = new HashMap<>();
 
 	public Corrida(){
 		this.voltas = 5;
@@ -53,13 +44,11 @@ public class Corrida {
 	}
 
 	public void addParticipantes(Set<Jogador> jogadores){
-		for(Jogador j : jogadores){
-			posicao.add(j.getCarro());
-		}
+		posicao.addAll(jogadores);
 	}
 
 	public String simulaCorrida(){
-		List<Carro> ultrapassar = new ArrayList<>();
+		List<Jogador> ultrapassar = new ArrayList<>();
 		Map<Integer, List<String>> acontecimentos = new HashMap<>();
 
 		for (int i = 1; i <= voltas; i++){
@@ -72,19 +61,21 @@ public class Corrida {
 				String GDU = e.getGDU();
 
 				for (int j = 1; j < posicao.size(); j++){
-					Carro c = posicao.get(j);
+					Jogador jc = posicao.get(j);
+					Carro c = jc.getCarro();
 
 					if(!c.getDNF()) {
 						boolean res = c.tentaUltrapassar(GDU);
-						if (res) { ultrapassar.add(c); }
+						if (res) { ultrapassar.add(jc); }
 					}
 				}
 
-				for(Carro u : ultrapassar){
-					boolean dnf = u.calculaDNF(i / voltas, GDU, meteorologia);
+				for(Jogador u : ultrapassar){
+					Carro uc = u.getCarro();
+					boolean dnf = uc.calculaDNF(i / voltas, GDU, meteorologia);
 
 					if(dnf){
-						u.setDNF(true);
+						uc.setDNF(true);
 						acontecimento.add(adicionarAcontecimento(u, e, "DNF", x));
 					}
 					else{
@@ -92,7 +83,7 @@ public class Corrida {
 						int ind = posicao.indexOf(u);
 
 						if (ind != 0)
-							ovr = u.calculaOverall(posicao.get(ind - 1));
+							ovr = uc.calculaOverall(posicao.get(ind - 1).getCarro());
 
 						if(ovr){
 							updatePosicao(u);
@@ -102,8 +93,8 @@ public class Corrida {
 				}
 
 				//for (Carro p : posicao){
-				//p.carro.calculaTempo();
-				//updateTempo(p);
+					//p.carro.calculaTempo();
+					//updateTempo(p);
 				//}
 
 				ultrapassar.clear();
@@ -117,7 +108,7 @@ public class Corrida {
 		return resumoCorrida();
 	}
 
-	private void updatePosicao(Carro u){
+	private void updatePosicao(Jogador u){
 		int ind = posicao.indexOf(u);
 		Collections.swap(posicao, ind, ind - 1);
 	}
@@ -127,12 +118,12 @@ public class Corrida {
 		list.add(p.somaTempo());
 	}
 
-	private String adicionarAcontecimento(Carro u, Elemento e, String acontecimento, int numero){
+	private String adicionarAcontecimento(Jogador u, Elemento e, String acontecimento, int numero){
 		if (Objects.equals(acontecimento, "DNF")){
-			return "O piloto " + u.getPiloto().getNomePiloto() + " despistou-se na " + e.getCategoria() + " " + numero + "\n";
+			return "O Jogador " + u.getNomeJogador() + " despistou-se na " + e.getCategoria() + " " + numero + "\n";
 		}
 		else if (Objects.equals(acontecimento, "Ultrapassagem")){
-			return "O piloto " + u.getPiloto().getNomePiloto() + " fez uma ultrapassagem com sucesso na " + e.getCategoria() + " " + numero +  " e passou para " + (posicao.indexOf(u) + 1) + "\n";
+			return "O Jogador " + u.getNomeJogador() + " fez uma ultrapassagem com sucesso na " + e.getCategoria() + " " + numero +  " e passou para " + (posicao.indexOf(u) + 1) + "\n";
 		}
 		else
 			return null;
@@ -149,7 +140,7 @@ public class Corrida {
 		StringBuilder sb = new StringBuilder();
 
 		for(int i = 1; i <= posicao.size(); i++){
-			sb.append(i + "º ---> " + posicao.get(i-1));
+			sb.append(i + "º ---> " + posicao.get(i-1).getNomeJogador());
 			sb.append("\n");
 		}
 
@@ -158,8 +149,8 @@ public class Corrida {
 		for (String categoria : posCategoria.keySet()) {
 			sb.append(categoria);
 			sb.append(": ");
-			for (Carro carro : posCategoria.get(categoria)) {
-				sb.append(carro.getPiloto().getNomePiloto());
+			for (Jogador jogador : posCategoria.get(categoria)) {
+				sb.append(jogador.getNomeJogador());
 				sb.append(", ");
 			}
 			sb.append("\n");
@@ -169,18 +160,18 @@ public class Corrida {
 	}
 
 	private void posicaoCategoria(){
-		for (Carro carro : posicao) {
-			String categoria = carro.getCategoria();
+		for (Jogador jogador : posicao) {
+			String categoria = jogador.getCarro().getCategoria();
 			if (!posCategoria.containsKey(categoria)) {
 				posCategoria.put(categoria, new ArrayList<>());
 			}
-			posCategoria.get(categoria).add(carro);
+			posCategoria.get(categoria).add(jogador);
 		}
 	}
 
 	private void clearDNF(){
-		for(Carro c : posicao){
-			c.setDNF(false);
+		for(Jogador j : posicao){
+			j.getCarro().setDNF(false);
 		}
 	}
 
@@ -192,11 +183,11 @@ public class Corrida {
 		this.voltas = voltas;
 	}
 
-	public List<Carro> getPosicao() {
+	public List<Jogador> getPosicao() {
 		return posicao;
 	}
 
-	public void setPosicao(List<Carro> posicao) {
+	public void setPosicao(List<Jogador> posicao) {
 		this.posicao = posicao;
 	}
 
@@ -224,11 +215,11 @@ public class Corrida {
 		this.circuito = circuito;
 	}
 
-	public Map<String, List<Carro>> getPosCategoria() {
+	public Map<String, List<Jogador>> getPosCategoria() {
 		return posCategoria;
 	}
 
-	public void setPosCategoria(Map<String, List<Carro>> posCategoria) {
+	public void setPosCategoria(Map<String, List<Jogador>> posCategoria) {
 		this.posCategoria = posCategoria;
 	}
 

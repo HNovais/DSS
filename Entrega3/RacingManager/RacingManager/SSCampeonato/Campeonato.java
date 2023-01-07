@@ -3,7 +3,6 @@ package RacingManager.SSCampeonato;
 import RacingManager.SSCarro.Carro;
 import RacingManager.SSCorrida.*;
 import RacingManager.*;
-import data.CorridaDAO;
 
 import java.util.*;
 

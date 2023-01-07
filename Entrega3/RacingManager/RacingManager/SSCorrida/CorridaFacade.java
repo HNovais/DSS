@@ -1,7 +1,6 @@
 package RacingManager.SSCorrida;
 
 import RacingManager.SSCarro.*;
-import data.CorridaDAO;
 
 import java.util.List;
 import java.util.Map;

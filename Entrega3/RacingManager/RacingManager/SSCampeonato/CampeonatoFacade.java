@@ -4,7 +4,6 @@ import RacingManager.Piloto;
 import RacingManager.SSCarro.Carro;
 import RacingManager.SSCorrida.Corrida;
 import data.CampeonatoDAO;
-import data.CorridaDAO;
 
 import java.util.List;
 
