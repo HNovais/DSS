@@ -10,7 +10,7 @@ public class Main {
             new TextUI().run();
         }
         catch (Exception e) {
-            System.out.println("Não foi possível arrancar: "+e.getMessage());
+            System.out.println("Not able to start "+e.getMessage());
         }
     }
 
