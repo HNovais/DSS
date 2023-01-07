@@ -181,6 +181,7 @@ public class TextUI {
 
     private void handlePlayChampionship(Campeonato campeonato) {
         int nJogadores = -1;
+        int afinacoes = campeonato.totalAfinacoes();
         //List<Jogador> jogadores = new ArrayList<>();
 
         while (true) {
@@ -200,7 +201,7 @@ public class TextUI {
         }
 
         for (int i = 1; i <= nJogadores; i++) {
-            Jogador j = new Jogador();
+            Jogador j = new Jogador(afinacoes);
             j.setNomeJogador(menuNome());
             j.setCarro(menuCarro());
             j.getCarro().setPiloto(menuPiloto());
@@ -297,33 +298,35 @@ public class TextUI {
                 String resposta;
                 if (jogadoresLista.get(j).getCarro().getCategoria().equalsIgnoreCase("C1") || jogadoresLista.get(j).getCarro().getCategoria().equalsIgnoreCase("C2")) {
                     System.out.println("Player " + jogadoresLista.get(j).getNomeJogador());
-                    System.out.println("Do you want to Tune your car for this Race? (yes/no)");
-                    System.out.print("Option: ");
-                    while (true) {
-                        resposta = scin.nextLine();
-                        if (resposta.equalsIgnoreCase("yes")) {
-                            System.out.println("Current Downforce: " + jogadoresLista.get(j).getAfinacoes());
-                            System.out.println("New Downforce: (between 0 and 1)");
-                            float downforce = 0.0f;
-                            while (true) {
-                                try {
-                                    downforce = Float.parseFloat(scin.nextLine());
-                                    break;
-                                } catch (NumberFormatException e) {
-                                    System.out.println("Invalid input. Please try again.");
-                                }
+                    if (jogadoresLista.get(j).getAfinacoes() > 0) {
+                        System.out.println("You have " + jogadoresLista.get(j).getAfinacoes() + " tunings.");
+                        System.out.println("Do you want to Tune your car for this Race? (yes/no)");
+                        System.out.print("Option: ");
+                        while (true) {
+                            resposta = scin.nextLine();
+                            if (resposta.equalsIgnoreCase("yes")) {
+                                System.out.println("Current Downforce: " + jogadoresLista.get(j).getDownforce());
+                                System.out.println("New Downforce: (between 0 and 1)");
+                                float downforce = 0.0f;
+                                while (true) {
+                                        downforce = Float.parseFloat(scin.nextLine());
+                                        if(downforce <= 1 || downforce >= 0) break;
+                                        else System.out.println("Invalid input. Please try again.");
+                                    }
+                                jogadoresLista.get(j).efetuaAfinacao();
+                                campeonato.alteraDownforce(jogadoresLista.get(j).getNomeJogador(), downforce);
+                                // System.out.println(jogadoresLista.get(j).carro.getDownforce());
+                                break;
+                            } else if (resposta.equalsIgnoreCase("no")) {
+                                break;
+                            } else if ((!resposta.equalsIgnoreCase("yes")) && (!resposta.equalsIgnoreCase("no")) && (!resposta.isEmpty())) {
+                                System.out.println("Invalid input. Please try again.");
+                                System.out.println(jogadoresLista.get(j));
+                                System.out.println("Do you want to Tune your car for this Race? (yes/no)");
+                                System.out.print("Option: ");
                             }
-                            campeonato.alteraDownforce(jogadoresLista.get(j).getNomeJogador(), downforce);
-                            // System.out.println(jogadoresLista.get(j).carro.getDownforce());
-                            break;
-                        } else if (resposta.equalsIgnoreCase("no")) {
-                            break;
-                        } else if ((!resposta.equalsIgnoreCase("yes")) && (!resposta.equalsIgnoreCase("no")) && (!resposta.isEmpty())) {
-                            System.out.println("Invalid input. Please try again.");
-                            System.out.println("Do you want to Tune your car for this Race? (yes/no)");
-                            System.out.print("Option: ");
                         }
-                    }
+                    } else System.out.println("You dont have tunings.");
                 }
             }
 

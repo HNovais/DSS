@@ -52,7 +52,6 @@ public class Corrida {
 		Map<Integer, List<String>> acontecimentos = new HashMap<>();
 
 		posicaoInicial();
-		posicaoInicial();
 
 		Scanner scanner = new Scanner(System.in);
 

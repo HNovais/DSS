@@ -27,12 +27,12 @@ public class Jogador {
 		this.afinacoes = 0;
 	}
 
-	public Jogador() {
+	public Jogador(int afinacoes) {
 		this.nomeJogador = "";
 		this.id = -1;
 		this.carro = null;
 		this.piloto = null;
-		this.afinacoes = 0;
+		this.afinacoes = afinacoes;
 	}
 
 	public String getNomeJogador() {
@@ -73,6 +73,15 @@ public class Jogador {
 	 */
 	public void escolhePiloto(Piloto p){
 		setPiloto(p);
+	}
+
+	// Get e Set downforce do carro quando o jogador faz afinações.
+
+	public float getDownforce(){ return this.carro.getDownforce(); }
+	public void setDownfore(float downforce) { this.carro.setDownforce(downforce); }
+
+	public void efetuaAfinacao(){
+		this.afinacoes--;
 	}
 
 	/**
