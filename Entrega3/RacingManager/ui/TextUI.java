@@ -245,7 +245,6 @@ public class TextUI {
         return carros.get(nCarros - 1);
     }
 
-
     private Piloto menuPiloto() {
         List<Piloto> pilotos = PilotoDAO.getInstance().getAll();
         int nPiloto = -1;
@@ -286,18 +285,28 @@ public class TextUI {
             System.out.println("** Meteorologia **");
             System.out.println("-> " + nextCorrida.getMeteorologia());
 
-          for (int j = 0; j < campeonato.getJogadores().size(); j++) {
+            for (int j = 0; j < campeonato.getJogadores().size(); j++) {
                 String resposta;
                 while (true) {
+                    System.out.println("Player " + jogadoresLista.get(j).getNomeJogador());
                     System.out.println("Do you want to Tune your car for this Race? (yes/no)");
                     System.out.print("Option: ");
                     resposta = scin.nextLine();
                     if (resposta.equalsIgnoreCase("yes")) {
-                        // i ou i-1 ??
                         System.out.println("Current Downforce: " + jogadoresLista.get(j).getAfinacoes());
                         System.out.println("New Downforce: (between 0 and 1)");
-                        Float downforce = scin.nextFloat();
+                        float downforce = 0.0f;
+                        while (true) {
+                            try {
+                                downforce = Float.parseFloat(scin.nextLine());
+                                break;
+                            } catch (NumberFormatException e) {
+                                System.out.println("Invalid input. Please try again.");
+                            }
+                        }
                         campeonato.alteraDownforce(jogadoresLista.get(j).getNomeJogador(), downforce);
+                        System.out.println(jogadoresLista.get(j).carro.getDownforce());
+                        break;
                     } else if (resposta.equalsIgnoreCase("no")) {
                         break;
                     } else {
@@ -310,7 +319,7 @@ public class TextUI {
                 String pneus;
                 String motor;
                 while (true) {
-                    System.out.println("Player " + j);
+                    System.out.println("Player " + jogadoresLista.get(j).getNomeJogador());
                     System.out.println("Select your Tires: (macio/duro/chuva)");
                     System.out.print("Option: ");
                     pneus = scin.nextLine();
