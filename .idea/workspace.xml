@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9707515b-6482-4d64-b7c1-4d5b225eabdb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/RacingManager/Circuito.java" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/RacingManager/Circuito.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/RacingManager/SSCampeonato/Campeonato.java" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/RacingManager/SSCampeonato/Campeonato.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/RacingManager/Circuito.class" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/RacingManager/Circuito.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/RacingManager/SSCampeonato/Campeonato.class" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/RacingManager/SSCampeonato/Campeonato.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/ui/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/ui/Menu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/ui/TextUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/out/production/RacingManager/ui/TextUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entrega3/RacingManager/ui/TextUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Entrega3/RacingManager/ui/TextUI.java" afterDir="false" />
-    </list>
+    <list default="true" id="9707515b-6482-4d64-b7c1-4d5b225eabdb" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

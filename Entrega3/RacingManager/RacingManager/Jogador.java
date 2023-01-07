@@ -5,16 +5,26 @@ import java.util.Random;
 
 public class Jogador {
 
+	private String nomeJogador;
 	private String id;
 	public Carro carro;
 	private Piloto piloto;
 	private int afinacoes;
 
 	public Jogador() {
+		this.nomeJogador = "";
 		this.id = "";
 		this.carro = null;
 		this.piloto = null;
 		this.afinacoes = 0;
+	}
+
+	public String getNomeJogador() {
+		return nomeJogador;
+	}
+
+	public void setNomeJogador(String nomeJogador) {
+		this.nomeJogador = nomeJogador;
 	}
 
 	public Carro getCarro() {

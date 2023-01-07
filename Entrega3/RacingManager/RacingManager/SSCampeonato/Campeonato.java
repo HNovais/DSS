@@ -164,7 +164,7 @@ public class Campeonato {
 	}
 
 	public int totalAfinacoes() {
-		return (int) (corridas.size() * 0.666666);
+		return (int) ((circuitos.size() * 2)/3);
 	}
 
 	/**
