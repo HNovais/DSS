@@ -148,15 +148,16 @@ public class TextUI {
         int circuitSize = circuitosNome.size();
         int invalidCounter = 0;
 
-        while (true) {
-            System.out.println("Circuits in " + campeonato.getNome() + ":");
-            for (int i = 0; i < circuitSize; i++) {
-                System.out.println(" -> " + circuitosNome.get(i));
-            }
-            System.out.println("Do you want to move on or go back? (yes/no)");
-            System.out.print("Option: ");
-            String input = scin.nextLine();
+        System.out.println("Circuits in " + campeonato.getNome() + ":");
+        for (int i = 0; i < circuitSize; i++) {
+            System.out.println(" -> " + circuitosNome.get(i));
+        }
 
+        System.out.println("Do you want to move on? (yes/no)");
+        String input;
+        System.out.print("Option: ");
+        while (true) {
+            input = scin.nextLine();
             if (input.equalsIgnoreCase("yes")) {
                 // clearWindow();
                 campeonato.setCircuitos(circuitos);
@@ -165,13 +166,15 @@ public class TextUI {
             } else if (input.equalsIgnoreCase("no")) {
                 showMenuCamp();
                 break;
-            } else if (!input.equals("")) {
+            } else if (!input.equalsIgnoreCase("yes") && (!input.equalsIgnoreCase("no")) && (!input.isEmpty())){
                 invalidCounter++;
                 if (invalidCounter >= 3) {
                     System.out.println("Too many invalid inputs. Going back to previous menu.");
                     break;
                 }
                 System.out.println("Invalid input. Please try again.");
+                System.out.println("Do you want to move on or go back? (yes/no)");
+                System.out.print("Option: ");
             }
         }
     }
@@ -182,7 +185,7 @@ public class TextUI {
 
         while (true) {
             try {
-                System.out.println("How many players will play? (Max: " + MAX + ")");
+                System.out.println("How many players will play? (Min: 1 & Max: " + MAX + ")");
                 System.out.print("Option: ");
                 String input = scin.nextLine();
                 nJogadores = Integer.parseInt(input);
@@ -208,14 +211,19 @@ public class TextUI {
     }
 
     private String menuNome() {
+        System.out.println("What is the name of the Player?");
+        System.out.print("Name: ");
+        String nomeJogador;
         while (true) {
-            System.out.println("What is the name of the Player?");
-            System.out.print("Name: ");
-            String nomeJogador = scin.nextLine();
-            if (!nomeJogador.isEmpty()) {
+            nomeJogador = scin.nextLine();
+            if (nomeJogador.matches("[a-zA-Z]+")) {
                 return nomeJogador;
             }
-            System.out.println("Invalid input. Please try again.");
+            else if(!nomeJogador.isEmpty()) {
+                System.out.println("Invalid input. Please enter a name with only letters.");
+                System.out.println("What is the name of the Player?");
+                System.out.print("Name: ");
+            }
         }
     }
 
@@ -287,10 +295,10 @@ public class TextUI {
 
             for (int j = 0; j < campeonato.getJogadores().size(); j++) {
                 String resposta;
+                System.out.println("Player " + jogadoresLista.get(j).getNomeJogador());
+                System.out.println("Do you want to Tune your car for this Race? (yes/no)");
+                System.out.print("Option: ");
                 while (true) {
-                    System.out.println("Player " + jogadoresLista.get(j).getNomeJogador());
-                    System.out.println("Do you want to Tune your car for this Race? (yes/no)");
-                    System.out.print("Option: ");
                     resposta = scin.nextLine();
                     if (resposta.equalsIgnoreCase("yes")) {
                         System.out.println("Current Downforce: " + jogadoresLista.get(j).getAfinacoes());
@@ -305,12 +313,14 @@ public class TextUI {
                             }
                         }
                         campeonato.alteraDownforce(jogadoresLista.get(j).getNomeJogador(), downforce);
-                        System.out.println(jogadoresLista.get(j).carro.getDownforce());
+                        // System.out.println(jogadoresLista.get(j).carro.getDownforce());
                         break;
                     } else if (resposta.equalsIgnoreCase("no")) {
                         break;
-                    } else {
+                    } else if ((!resposta.equalsIgnoreCase("yes")) && (!resposta.equalsIgnoreCase("no")) && (!resposta.isEmpty())){
                         System.out.println("Invalid input. Please try again.");
+                        System.out.println("Do you want to Tune your car for this Race? (yes/no)");
+                        System.out.print("Option: ");
                     }
                 }
             }
@@ -332,8 +342,8 @@ public class TextUI {
                         if ((motor.equalsIgnoreCase("conservador")) || (motor.equalsIgnoreCase("normal")) || (motor.equalsIgnoreCase("agressivo"))) {
                             // i ou i-1 ??
                             campeonato.escolheMotor(jogadoresLista.get(j).getNomeJogador(), motor);
-                            System.out.println(jogadoresLista.get(j).getCarro().getMotor());
-                            System.out.println(jogadoresLista.get(j).getCarro().getPneus());
+                            // System.out.println(jogadoresLista.get(j).getCarro().getMotor());
+                            // System.out.println(jogadoresLista.get(j).getCarro().getPneus());
                             // System.out.println(jogadoresLista.get(j).getId());
                             break;
                         }
