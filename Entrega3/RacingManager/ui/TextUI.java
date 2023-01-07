@@ -107,7 +107,6 @@ public class TextUI {
         // Set up the handlers for each option in the submenu
         subMenu.setHandler(1, this::showMenuCamp);
         //subMenu.setHandler(2, this::handleRaceSimulation);
-        //subMenu.setHandler(2, this::handleRaceSimulation);
 
         // Run the submenu
         subMenu.run();
@@ -224,34 +223,51 @@ public class TextUI {
         List<Carro> carros = CarroDAO.getInstance().getAll();
         int nCarros = -1;
 
-        System.out.println("Select one of the following Cars:");
-        for (int i = 0; i < carros.size(); i++) {
-            String str = Integer.toString(i + 1);
-            System.out.println(str + " - " + carros.get(i));
+        while (true) {
+            try {
+                System.out.println("Select one of the following Cars:");
+                for (int i = 0; i < carros.size(); i++) {
+                    String str = Integer.toString(i + 1);
+                    System.out.println(str + " - " + carros.get(i));
+                }
+                System.out.print("Option: ");
+                nCarros = scin.nextInt();
+                if (nCarros >= 1 && nCarros <= carros.size()) {
+                    break;
+                }
+                System.out.println("Invalid input. Please try again.");
+            } catch (InputMismatchException e) {
+                scin.nextLine();
+                System.out.println("Invalid input. Please try again.");
+            }
         }
-
-        //System.out.println(carroString);
-        System.out.print("Option: ");
-        nCarros = scin.nextInt();
-        // clearWindow();
-        //} while (nCarros <= 0 || nCarros >= carros.size());
 
         return carros.get(nCarros - 1);
     }
+
 
     private Piloto menuPiloto() {
         List<Piloto> pilotos = PilotoDAO.getInstance().getAll();
         int nPiloto = -1;
 
-        System.out.println("Select one of the following Pilots:");
-        for (int i = 0; i < pilotos.size(); i++) {
-            String str = Integer.toString(i + 1);
-            System.out.println(str + " - " + pilotos.get(i));
+        while (true) {
+            try {
+                System.out.println("Select one of the following Pilots:");
+                for (int i = 0; i < pilotos.size(); i++) {
+                    String str = Integer.toString(i + 1);
+                    System.out.println(str + " - " + pilotos.get(i));
+                }
+                System.out.print("Option: ");
+                nPiloto = scin.nextInt();
+                if (nPiloto >= 1 && nPiloto <= pilotos.size()) {
+                    break;
+                }
+                System.out.println("Invalid input. Please try again.");
+            } catch (InputMismatchException e) {
+                scin.nextLine();
+                System.out.println("Invalid input. Please try again.");
+            }
         }
-        //System.out.println(carroString);
-        System.out.print("Option: ");
-        nPiloto = scin.nextInt();
-        // clearWindow();
 
         return pilotos.get(nPiloto - 1);
     }
@@ -270,27 +286,18 @@ public class TextUI {
             System.out.println("** Meteorologia **");
             System.out.println("-> " + nextCorrida.getMeteorologia());
 
-            for (int j = 0; j < campeonato.getJogadores().size(); j++) {
+          for (int j = 0; j < campeonato.getJogadores().size(); j++) {
                 String resposta;
                 while (true) {
-                    System.out.println("Do you want to Tune your car? (yes/no)");
+                    System.out.println("Do you want to Tune your car for this Race? (yes/no)");
                     System.out.print("Option: ");
                     resposta = scin.nextLine();
                     if (resposta.equalsIgnoreCase("yes")) {
-                        System.out.println("Number of Possible Tunings: " + campeonato.totalAfinacoes());
-                        System.out.println("Do you want to change Downforce? (yes/no)");
-                        String downforceResposta = scin.nextLine();
-                        if (downforceResposta.equalsIgnoreCase("yes")) {
-                            // i ou i-1 ??
-                            System.out.println("Current Downforce: " + jogadoresLista.get(i).getAfinacoes());
-
-                        }
-                        else if (downforceResposta.equalsIgnoreCase("no")) {
-                            break;
-                        }
-                        else {
-                            System.out.println("Invalid input. Please try again.");
-                        }
+                        // i ou i-1 ??
+                        System.out.println("Current Downforce: " + jogadoresLista.get(j).getAfinacoes());
+                        System.out.println("New Downforce: (between 0 and 1)");
+                        Float downforce = scin.nextFloat();
+                        campeonato.alteraDownforce(jogadoresLista.get(j).getId(), downforce);
                     } else if (resposta.equalsIgnoreCase("no")) {
                         break;
                     } else {
@@ -300,34 +307,37 @@ public class TextUI {
             }
 
             for (int j = 0; j < campeonato.getJogadores().size(); j++) {
-                String resposta;
+                String pneus;
+                String motor;
                 while (true) {
-                    System.out.println("Do you want to Tune your car? (yes/no)");
+                    System.out.println("Player " + j);
+                    System.out.println("Select your Tires: (macio/duro/chuva)");
                     System.out.print("Option: ");
-                    resposta = scin.nextLine();
-                    if (resposta.equalsIgnoreCase("yes")) {
-                        // System.out.println("Number of Possible Tunings: " + campeonato.totalAfinacoes());
-                        System.out.println("Do you want to change downforce? (yes/no)");
-                        String downforceResposta = scin.nextLine();
-                        if (resposta.equalsIgnoreCase("yes")) {
-
-                        }
-                        else if (resposta.equalsIgnoreCase("no")) {
+                    pneus = scin.nextLine();
+                    if ((pneus.equalsIgnoreCase("macio")) || (pneus.equalsIgnoreCase("duro")) || (pneus.equalsIgnoreCase("chuva"))) {
+                        // i ou i-1 ??
+                        campeonato.escolhePneus(jogadoresLista.get(j).getId(), pneus);
+                        System.out.println("Select your Engine Mode: (conservador/normal/agressivo)");
+                        System.out.print("Option: ");
+                        motor = scin.nextLine();
+                        if ((motor.equalsIgnoreCase("conservador")) || (motor.equalsIgnoreCase("normal")) || (motor.equalsIgnoreCase("agressivo"))) {
+                            // i ou i-1 ??
+                            campeonato.escolheMotor(jogadoresLista.get(j).getId(), motor);
+                            System.out.println(jogadoresLista.get(j).getCarro().getMotor());
+                            System.out.println(jogadoresLista.get(j).getCarro().getPneus());
+                            // System.out.println(jogadoresLista.get(j).getId());
                             break;
                         }
                         else {
                             System.out.println("Invalid input. Please try again.");
                         }
-                    } else if (resposta.equalsIgnoreCase("no")) {
-                        break;
-                    } else {
-                        System.out.println("Invalid input. Please try again.");
-                    }
+                    } else System.out.println("Invalid input. Please try again.");
                 }
             }
             System.out.println(nextCorrida.simulaCorrida());
         }
     }
+}
 
 /*
     private void showMenuAfinacoes() {
@@ -348,7 +358,7 @@ public class TextUI {
     }
 */
 
-    private Campeonato handleDownforce(Campeonato campeonato) {
+/*    private Campeonato handleDownforce(Campeonato campeonato) {
         for (int j = 0; j < campeonato.getJogadores().size(); j++) {
             // totalAfinacoes dá zero
             System.out.println("Number of Possible Tunings: " + campeonato.totalAfinacoes());
@@ -363,7 +373,7 @@ public class TextUI {
         return campeonato;
     }
 
-}
+}*/
         /*
             Campeonato campeonatoPneus = selectTires(campeonato);
 

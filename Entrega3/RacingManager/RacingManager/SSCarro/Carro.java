@@ -163,8 +163,8 @@ public class Carro {
 		else
 			m2 = 0.25F;
 
-		float val1 = (c1 / 2) + ((p1 + m1 + d1 + pac1) / 4);
-		float val2 = (c2 / 2) + ((p2 + m2 + d2 + pac2) / 4);
+		float val1 = ((c1 / 2) + ((p1 + m1 + d1 + pac1 + randomFloat()) / 5));
+		float val2 = ((c2 / 2) + ((p2 + m2 + d2 + pac2 + randomFloat()) / 5));
 
 		if (val1 > val2)
 			response = true;
@@ -193,7 +193,7 @@ public class Carro {
 		this.voltas = voltas;
 	}
 
-		public List<Integer> getPosicao() {
+	public List<Integer> getPosicao() {
 		return posicao;
 	}
 

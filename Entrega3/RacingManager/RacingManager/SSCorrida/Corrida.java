@@ -60,10 +60,11 @@ public class Corrida {
 
 	public String simulaCorrida(){
 		List<Carro> ultrapassar = new ArrayList<>();
-		Map<Integer, String> acontecimentos = new HashMap<>();
+		Map<Integer, List<String>> acontecimentos = new HashMap<>();
 
 		for (int i = 1; i <= voltas; i++){
 			List<Elemento> elementos = circuito.getElementos();
+			List<String> acontecimento = new ArrayList<>();
 			int x = 0;
 
 			for (Elemento e : elementos){
@@ -84,7 +85,7 @@ public class Corrida {
 
 					if(dnf){
 						u.setDNF(true);
-						acontecimentos.put(i,adicionarAcontecimento(u, e, "DNF", x));
+						acontecimento.add(adicionarAcontecimento(u, e, "DNF", x));
 					}
 					else{
 						boolean ovr = false;
@@ -95,21 +96,21 @@ public class Corrida {
 
 						if(ovr){
 							updatePosicao(u);
-							acontecimentos.put(i,adicionarAcontecimento(u,e,"Ultrapassagem",x));
+							acontecimento.add(adicionarAcontecimento(u,e,"Ultrapassagem",x));
 						}
 					}
 				}
 
 				//for (Carro p : posicao){
-					//p.carro.calculaTempo();
-					//updateTempo(p);
+				//p.carro.calculaTempo();
+				//updateTempo(p);
 				//}
 
 				ultrapassar.clear();
 			}
-
+			acontecimentos.put(i, acontecimento);
 			printResumo(i, acontecimentos.get(i));
-
+			acontecimento.clear();
 		}
 		clearDNF();
 
@@ -137,7 +138,7 @@ public class Corrida {
 			return null;
 	}
 
-	private void printResumo(int volta, String acontecimentos){
+	private void printResumo(int volta, List<String> acontecimentos){
 		System.out.println("---------- Volta " + volta + " ----------");
 		if(acontecimentos != null)
 			System.out.println(acontecimentos);
