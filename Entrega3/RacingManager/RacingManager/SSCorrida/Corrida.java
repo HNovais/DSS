@@ -51,6 +51,8 @@ public class Corrida {
 		List<Jogador> ultrapassar = new ArrayList<>();
 		Map<Integer, List<String>> acontecimentos = new HashMap<>();
 
+		posicaoInicial();
+
 		for (int i = 1; i <= voltas; i++){
 			List<Elemento> elementos = circuito.getElementos();
 			List<String> acontecimento = new ArrayList<>();
@@ -92,11 +94,6 @@ public class Corrida {
 					}
 				}
 
-				//for (Carro p : posicao){
-					//p.carro.calculaTempo();
-					//updateTempo(p);
-				//}
-
 				ultrapassar.clear();
 			}
 			acontecimentos.put(i, acontecimento);
@@ -113,9 +110,11 @@ public class Corrida {
 		Collections.swap(posicao, ind, ind - 1);
 	}
 
-	private void updateTempo(Carro p){
-		List<Long> list = tempo.get(p.getId());
-		list.add(p.somaTempo());
+	private void posicaoInicial(){
+		System.out.println("----Posição Inicial----");
+		for (int i = 1; i <= posicao.size(); i++){
+			System.out.println(i + "º: " + posicao.get(i-1).getNomeJogador());
+		}
 	}
 
 	private String adicionarAcontecimento(Jogador u, Elemento e, String acontecimento, int numero){
