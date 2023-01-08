@@ -4,6 +4,8 @@ import RacingManager.Utilizador;
 
 import java.sql.DriverManager;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UtilizadorDAO {
     private static UtilizadorDAO singleton = null;
@@ -102,4 +104,39 @@ public class UtilizadorDAO {
             e.printStackTrace();
         }
     }
+
+    public void updateRanking(String username, int valor){
+        try (Connection connection = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
+            Utilizador utilizador = get(username);
+
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE users SET ranking = ? WHERE username = ?");
+            statement.setInt(1, utilizador.getRanking() + valor);
+            statement.setString(2, utilizador.getUsername());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<String> showRanking(){
+        List<String> ranking = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD)) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM users ORDER BY ranking DESC LIMIT 10;");
+            ResultSet resultSet = statement.executeQuery();
+            int x = 1;
+            while (resultSet.next()) {
+                String username = resultSet.getString("username");
+                int rank = resultSet.getInt("ranking");
+                ranking.add(x + "º " + username + " -> " + rank);
+                x++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ranking;
+    }
+
 }

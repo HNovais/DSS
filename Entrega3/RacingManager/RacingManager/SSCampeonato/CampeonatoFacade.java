@@ -4,8 +4,10 @@ import RacingManager.Piloto;
 import RacingManager.SSCarro.Carro;
 import RacingManager.SSCorrida.Corrida;
 import data.CampeonatoDAO;
+import data.UtilizadorDAO;
 
 import java.util.List;
+import java.util.Map;
 
 public class CampeonatoFacade implements ICampeonato {
 
@@ -190,4 +192,27 @@ public class CampeonatoFacade implements ICampeonato {
 		throw new UnsupportedOperationException();
 	}
 
+	public void saveResults(Map<String, String> usernames, UtilizadorDAO utilizadorDAO) {
+		List<String> classificacao = getCampeonatoAtual().getClassificacaoFinal();
+		int x = 3;
+
+		if(classificacao.size() < 3)
+			x = classificacao.size();
+
+		for(Map.Entry<String, String> entry : usernames.entrySet()){
+			String jogador = entry.getKey();
+			String username = entry.getValue();
+
+			for(int i = 0; i < x; i++){
+				if (jogador.compareTo(classificacao.get(i)) == 0){
+					if (i == 0)
+						utilizadorDAO.updateRanking(username, 5);
+					else if (i == 1)
+						utilizadorDAO.updateRanking(username, 3);
+					else
+						utilizadorDAO.updateRanking(username, 1);
+				}
+			}
+		}
+	}
 }

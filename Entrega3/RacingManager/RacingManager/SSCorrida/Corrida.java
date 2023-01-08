@@ -24,12 +24,13 @@ public class Corrida {
 		this.posCategoria = new HashMap<>();
 	}
 
-	public Corrida(Circuito circuito){
-		this.voltas = 5;
+	public Corrida(Circuito circuito, int voltas){
+		this.voltas = voltas;
 		this.posicao = new ArrayList<>();
 		this.tempo = new HashMap<>();
 		this.meteorologia = "Seco";
 		this.posCategoria = new HashMap<>();
+		this.circuito = circuito;
 	}
 
 	public void setMeteorologia(){

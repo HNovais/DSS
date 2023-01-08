@@ -4,11 +4,14 @@ import RacingManager.Piloto;
 import RacingManager.SSCarro.Carro;
 import RacingManager.SSCorrida.Corrida;
 import data.CampeonatoDAO;
+import data.UtilizadorDAO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ICampeonato {
 
+	public void saveResults(Map<String, String> usernames, UtilizadorDAO utilizadorDAO);
 	public CampeonatoDAO getCampeonatos();
 	public void setCampeonatos(CampeonatoDAO campeonatos);
 	public Campeonato getCampeonatoAtual();

@@ -12,6 +12,8 @@ public class Campeonato {
 	private int id;
 	private String nome;
 	private int participantes;
+
+	private int voltas;
 	private List<Corrida> corridas = new ArrayList<>();
 	public List<Circuito> circuitos = new ArrayList<>();
 	public Set<Jogador> jogadores = new HashSet<>();
@@ -21,6 +23,23 @@ public class Campeonato {
 	// private Map<String, List<String>> pontCategoria;
 	private CorridaFacade corrF;
 	// CorridaDAO corrDAO;
+
+
+	public List<String> getClassificacaoFinal() {
+		return classificacaoFinal;
+	}
+
+	public void setClassificacaoFinal(List<String> classificacaoFinal) {
+		this.classificacaoFinal = classificacaoFinal;
+	}
+
+	public int getVoltas() {
+		return voltas;
+	}
+
+	public void setVoltas(int voltas) {
+		this.voltas = voltas;
+	}
 
 	public List<Circuito> getCircuitos() {
 		return circuitos;
@@ -67,7 +86,7 @@ public class Campeonato {
 	public Corrida nextCorrida(int i){
 		Circuito circuito = circuitos.get(i);
 
-		Corrida corrida = new Corrida(circuito);
+		Corrida corrida = new Corrida(circuito, getVoltas());
 		corrida.setMeteorologia();
 
 		return corrida;
@@ -218,7 +237,8 @@ public class Campeonato {
 		for (Map.Entry<String, Integer> entry : entries) {
 			String key = entry.getKey();
 			int value = entry.getValue();
-			System.out.println("1º: " + key + " ---> " + value);
+			System.out.println(x + "º: " + key + " ---> " + value);
+			this.classificacaoFinal.add(key);
 			x++;
 		}
 	}
@@ -275,5 +295,18 @@ public class Campeonato {
 				.orElse(null);
 		j.afinaCarro();
 
+	}
+
+	public void generateCorridas(){
+		for(int i = 0; i < circuitos.size(); i++){
+			Corrida nextCorrida = nextCorrida(i);
+			Circuito c = getCircuitos().get(i);
+
+			nextCorrida.setCircuito(c);
+			List<Jogador> jogadores = new ArrayList<>(getJogadores());
+			nextCorrida.setPosicao(jogadores);
+
+			getCorridas().add(nextCorrida);
+		}
 	}
 }
