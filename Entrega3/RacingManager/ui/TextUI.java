@@ -4,18 +4,22 @@ import RacingManager.*;
 import RacingManager.SSCampeonato.Campeonato;
 import RacingManager.SSCarro.Carro;
 import RacingManager.SSCorrida.Corrida;
-import com.sun.jdi.VMCannotBeModifiedException;
 import data.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.sql.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TextUI {
     private IRacingManager model;
     private Menu menu;
     private Scanner scin;
     private boolean isLoggedIn;
-    private final int MAX = 6;
+    private final int MAX = 10;
+    private final int MAXV = 8;
+    private boolean flag = false;
+    private Connection connection;
 
 
     public static void clearWindow() {
@@ -34,9 +38,6 @@ public class TextUI {
         this.menu.setHandler(2, this::handleLogin);
 
         this.model = new RacingManagerFacade();
-        // Set the precondition for options that should only be available to logged-in users
-        // this.menu.setPreCondition(1, () -> this.isLoggedIn);
-        // this.menu.setPreCondition(2, () -> this.isLoggedIn);
         scin = new Scanner(System.in);
     }
 
@@ -53,6 +54,18 @@ public class TextUI {
 
         if (username.isEmpty() || password.isEmpty()) {
             System.out.println("Username and password cannot be empty! Try again.");
+            // Return to the main menu
+            this.menu.run();
+        } else if (username.length() < 6) {
+            System.out.println("Username must be at least 6 characters long! Try again.");
+            // Return to the main menu
+            this.menu.run();
+        } else if (password.length() < 6) {
+            System.out.println("Password must be at least 6 characters long! Try again.");
+            // Return to the main menu
+            this.menu.run();
+        } else if (!password.matches(".*[A-Z].*") || !password.matches(".*[0-9].*")) {
+            System.out.println("Password must contain at least one uppercase letter and one number! Try again.");
             // Return to the main menu
             this.menu.run();
         } else {
@@ -85,25 +98,37 @@ public class TextUI {
             System.out.println("Username and password cannot be empty! Try again.");
             // Return to the main menu
             this.menu.run();
+        } else if (username.length() < 6) {
+            System.out.println("Username must be at least 6 characters long! Try again.");
+            // Return to the main menu
+            this.menu.run();
+        } else if (password.length() < 6) {
+            System.out.println("Password must be at least 6 characters long! Try again.");
+            // Return to the main menu
+            this.menu.run();
+        } else if (!password.matches(".*[A-Z].*") || !password.matches(".*[0-9].*")) {
+            System.out.println("Password must contain at least one uppercase letter and one number! Try again.");
+            // Return to the main menu
+            this.menu.run();
         } else {
             // Use the UtilizadorDAO to retrieve the user with the entered username
             this.model.setUtilizadores(UtilizadorDAO.getInstance());
             Utilizador utilizador = this.model.getUtilizadores().get(username);
 
-        if (utilizador == null) {
-            // User not found
-            System.out.println("User not found");
-            // Return to the main menu
-            this.menu.run();
-        } else if (!utilizador.getPassword().equals(password)) {
-            // Incorrect password
-            System.out.println("Invalid Password");
-            // Return to the main menu
-            this.menu.run();
-        } else {
-            // Successful login
-            this.isLoggedIn = true;
-            System.out.println("Successfully logged in!");
+            if (utilizador == null) {
+                // User not found
+                System.out.println("User not found");
+                // Return to the main menu
+                this.menu.run();
+            } else if (!utilizador.getPassword().equals(password)) {
+                // Incorrect password
+                System.out.println("Invalid Password");
+                // Return to the main menu
+                this.menu.run();
+            } else {
+                // Successful login
+                this.isLoggedIn = true;
+                System.out.println("Successfully logged in!");
 
                 // Show the submenu
                 showSubMenu();
@@ -135,6 +160,7 @@ public class TextUI {
     }
 
     private void showMenuCamp() {
+        clearWindow();
         this.model.getCampF().setCampeonatos(CampeonatoDAO.getInstance());
         CampeonatoDAO campeonatoDAO = this.model.getCampF().getCampeonatos();
 
@@ -195,7 +221,7 @@ public class TextUI {
             } else if (input.equalsIgnoreCase("no")) {
                 showMenuCamp();
                 break;
-            } else if (!input.equalsIgnoreCase("yes") && (!input.equalsIgnoreCase("no")) && (!input.isEmpty())){
+            } else if (!input.equalsIgnoreCase("yes") && (!input.equalsIgnoreCase("no")) && (!input.isEmpty())) {
                 invalidCounter++;
                 if (invalidCounter >= 3) {
                     System.out.println("Too many invalid inputs. Going back to previous menu.");
@@ -210,15 +236,16 @@ public class TextUI {
 
     private void handlePlayChampionship(Campeonato campeonato) {
         int nJogadores = -1;
+        int nVoltas = 3;
         int afinacoes = campeonato.totalAfinacoes();
 
         while (true) {
             try {
-                System.out.println("How many players will play? (Min: 1 & Max: " + MAX + ")");
+                System.out.println("How many players will play? (Min: 2 & Max: " + MAX + ")");
                 System.out.print("Option: ");
                 String input = scin.nextLine();
                 nJogadores = Integer.parseInt(input);
-                if (nJogadores <= 1 || nJogadores >= 7) {
+                if (nJogadores <= 1 || nJogadores >= 11) {
                     System.out.println("Invalid number of players. Please try again.");
                     continue;
                 }
@@ -227,11 +254,28 @@ public class TextUI {
                 System.out.println("Invalid input. Please try again.");
             }
         }
+        while (true) {
+            try {
+                System.out.println("How many laps will the race have? (Min: 3 & Max: " + MAXV + ")");
+                System.out.print("Option: ");
+                String input = scin.nextLine();
+                nVoltas = Integer.parseInt(input);
+                if (nVoltas <= 2 || nVoltas >= 7) {
+                    System.out.println("Invalid number of laps. Please try again.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please try again.");
+            }
+        }
 
+        int x = 1;
         for (int i = 1; i <= nJogadores; i++) {
             Jogador j = new Jogador(afinacoes);
-            String nome = menuNome();
+            String nome = menuNome(x);
             j.setNomeJogador(nome);
+            x++;
             j.setCarro(menuCarro());
             j.getCarro().setPiloto(menuPiloto());
             campeonato.jogadores.add(j);
@@ -246,18 +290,17 @@ public class TextUI {
         showSubMenu();
     }
 
-    private String menuNome() {
-        System.out.println("What is the name of the Player?");
+    private String menuNome(int x) {
+        System.out.println("What is the name of the Player " + x + "?");
         System.out.print("Name: ");
         String nomeJogador;
         while (true) {
             nomeJogador = scin.nextLine();
             if (nomeJogador.matches("[a-zA-Z]+")) {
                 return nomeJogador;
-            }
-            else if(!nomeJogador.isEmpty()) {
+            } else if (!nomeJogador.isEmpty()) {
                 System.out.println("Invalid input. Please enter a name with only letters.");
-                System.out.println("What is the name of the Player?");
+                System.out.println("What is the name of the Player " + x + "?");
                 System.out.print("Name: ");
             }
         }
@@ -287,7 +330,7 @@ public class TextUI {
                 System.out.println("Invalid input. Please try again.");
             }
         }
-
+        clearWindow();
         return carros.get(nCarros - 1);
     }
 
@@ -315,7 +358,7 @@ public class TextUI {
                 System.out.println("Invalid input. Please try again.");
             }
         }
-
+        clearWindow();
         return pilotos.get(nPiloto - 1);
     }
 

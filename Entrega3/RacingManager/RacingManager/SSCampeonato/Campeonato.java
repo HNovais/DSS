@@ -18,9 +18,10 @@ public class Campeonato {
 	public List<Circuito> circuitos = new ArrayList<>();
 	public Set<Jogador> jogadores = new HashSet<>();
 	public Map<String, List<Integer>> classificacao = new HashMap<>();
+	public List<String> classificacaoFinal = new ArrayList<>();
 	private int contador = 0;
 	public Map<String, List<Integer>> pontuacao = new HashMap<>();
-	// private Map<String, List<String>> pontCategoria;
+	private Map<String, List<String>> pontCategoria = new HashMap<>();
 	private CorridaFacade corrF;
 	// CorridaDAO corrDAO;
 
@@ -187,6 +188,13 @@ public class Campeonato {
 		return (int) ((circuitos.size() * 2)/3);
 	}
 
+	public String getCategoriaJog(String idJ){
+		Jogador j = jogadores.stream()
+				.filter(jog -> jog.getNomeJogador().equalsIgnoreCase(idJ))
+				.findFirst()
+				.orElse(null);
+		return j.getCarro().getCategoria();
+	}
 	/**
 	 * 
 	 * @param idJ
@@ -225,7 +233,51 @@ public class Campeonato {
 		return updates;
 	}
 
-	public void printFinal(){
+	public void printFinal() {
+		Map<String, List<String>> pontuacaoCategoria = new HashMap<>();
+		// Ordena a lista de pontuações por pontuação
+		List<Map.Entry<String, Integer>> list = new ArrayList<>(this.getPontuacao().entrySet());
+		Collections.sort(list, (a, b) -> b.getValue() - a.getValue());
+
+		int x = 1;
+		for (Map.Entry<String, Integer> entry : list) {
+			String key = entry.getKey();
+			int value = entry.getValue();
+			System.out.println(x + "º: " + key + " ---> " + value);
+			this.classificacaoFinal.add(key);
+			x++;
+		}
+		System.out.println();
+
+		for (Map.Entry<String, Integer> entry : list) {
+			String nome = entry.getKey();
+			//int pontuacao = entry.getValue();
+			String categoria = this.getCategoriaJog(nome);
+			if(!pontuacaoCategoria.containsKey(categoria)) {
+				List<String> listAux = new ArrayList<>();
+				listAux.add(nome);
+				pontuacaoCategoria.put(categoria, listAux);
+			}
+			else {
+				pontuacaoCategoria.get(categoria).add(nome);
+				//pontuacaoCategoria.put(categoria, listAux);
+			}
+		}
+		int y;
+		for (Map.Entry<String, List<String>> entry : pontuacaoCategoria.entrySet()) {
+			String categoria = entry.getKey();
+			List<String> jogadores = entry.getValue();
+			System.out.println("Categoria: " + categoria);
+			y = 1;
+			for (String jogador : jogadores) {
+				System.out.println(y + "º: " + jogador);
+				y++;
+			}
+		}
+
+	}
+/*
+	public void printFinal() {
 		System.out.println("------Classificação Geral------");
 		Map<String, Integer> c = getPontuacao();
 
@@ -241,7 +293,40 @@ public class Campeonato {
 			this.classificacaoFinal.add(key);
 			x++;
 		}
+
+		this.getPontuacaoCategoria(this.getPontuacao());
+
 	}
+*/
+	/*
+		private String resumoCorrida(){
+		StringBuilder sb = new StringBuilder();
+		List<Jogador> listAux = new ArrayList<>();
+
+		for(int i = 1; i <= posicao.size(); i++){
+			sb.append(i + "º ---> " + posicao.get(i-1).getNomeJogador());
+			sb.append("\n");
+		}
+
+		posicaoCategoria();
+
+		for (String categoria : posCategoria.keySet()) {
+			sb.append(categoria);
+			sb.append(": ");
+			listAux = posCategoria.get(categoria);
+			for (int i = 0; i < listAux.size(); i++) {
+				if (i+1 == posCategoria.get(categoria).size()) {
+					sb.append(".");
+				} else {
+					sb.append(listAux.get(i).getNomeJogador());
+					sb.append(", ");
+				}
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+	 */
 
 	private Map<String, Integer> getPontuacao(){
 		Map<String, Integer> c = new HashMap<>();

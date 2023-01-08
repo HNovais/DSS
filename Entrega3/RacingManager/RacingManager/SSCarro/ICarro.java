@@ -1,44 +1,25 @@
 package RacingManager.SSCarro;
 
+import RacingManager.Piloto;
+import data.CarroDAO;
+
+import java.util.List;
+import java.util.Objects;
+
 public interface ICarro {
 
-	//void afinaCarro();
+	public Carro getCarro(String idCarro);
+	public boolean tentaUltrapassar(String GDU);
 
-	/**
-	 * 
-	 * @param val
-	 */
-	//void alteraDownforce(String idCarro, float val);
+	public boolean calculaDNF();
 
-	/**
-	 * 
-	 * @param p
-	 */
-	//void escolhePneus(String idCarro, String p);
+	public int calculaOverall();
 
-	/**
-	 * 
-	 * @param m
-	 */
-	//void escolheMotor(String idCarro, String m);
+	public long calculaTempo();
 
-	/**
-	 * 
-	 * @param GDU
-	 */
-	boolean tentaUltrapassar(String GDU);
+	public boolean tentaUltrapassarPremium(String cat1, String cat2);
 
-	boolean calculaDNF();
+	public CarroDAO getCarros();
 
-	int calculaOverall();
-
-	long calculaTempo();
-
-	/**
-	 * 
-	 * @param cat1
-	 * @param cat2
-	 */
-	boolean tentaUltrapassarPremium(String cat1, String cat2);
-
+	public void setCarros(CarroDAO carros);
 }

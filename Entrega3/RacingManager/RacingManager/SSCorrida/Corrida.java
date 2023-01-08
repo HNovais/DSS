@@ -149,6 +149,7 @@ public class Corrida {
 
 	private String resumoCorrida(){
 		StringBuilder sb = new StringBuilder();
+		List<Jogador> listAux = new ArrayList<>();
 
 		for(int i = 1; i <= posicao.size(); i++){
 			sb.append(i + "º ---> " + posicao.get(i-1).getNomeJogador());
@@ -160,13 +161,18 @@ public class Corrida {
 		for (String categoria : posCategoria.keySet()) {
 			sb.append(categoria);
 			sb.append(": ");
-			for (Jogador jogador : posCategoria.get(categoria)) {
-				sb.append(jogador.getNomeJogador());
-				sb.append(", ");
+			listAux = posCategoria.get(categoria);
+			for (int i = 0; i < listAux.size(); i++) {
+				if (i+1 == posCategoria.get(categoria).size()) {
+					sb.append(listAux.get(i).getNomeJogador());
+					sb.append(".");
+				} else {
+					sb.append(listAux.get(i).getNomeJogador());
+					sb.append(", ");
+				}
 			}
 			sb.append("\n");
 		}
-
 		return sb.toString();
 	}
 
