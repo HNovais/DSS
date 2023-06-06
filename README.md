@@ -10,4 +10,4 @@ Trabalho prático da UC de Desenvolvimento de Sistemas de Software
 
 <b> LEI - Universidade do Minho - 22/23 </b>
 
-<b> Nota - 16 </b>
+<b> Nota Final - 16 </b>
